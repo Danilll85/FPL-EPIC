@@ -28,7 +28,7 @@ const getDays = (date, delimiter) => {
 
 const setWeek = (firstDay) => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+    
     let right = firstDay;
 
     let outputStr = ``;
@@ -44,10 +44,30 @@ const setWeek = (firstDay) => {
 }
 
 const drawCalendar = (year, month) => {
-    const months = ["December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November"];    
+    if(typeof month == 'number' && 
+        (
+            month < 1 || 
+            month > 12
+        )) {
+        
+        console.log('Incorrect month');
+        return;
+    }
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];    
     
-    if(typeof month == "string") month = months.findIndex((value) => value.toLowerCase() == month.toLowerCase());
+    if(typeof month == "string") { 
+        month = months.findIndex((value) => value.toLowerCase() == month.toLowerCase()); 
+        
+        if (month == -1) {
+            console.log("Incorrect month");
             
+            return;
+        }
+        
+        month++;  
+    } 
+    
     const date = new Date(`${year}-${month}-1`);
     
     let monthStr = ""; 
@@ -56,7 +76,7 @@ const drawCalendar = (year, month) => {
     
     const days = getDays(date, delimiter);
 
-    monthStr += `\t\t\t${' '.repeat(7)}${months[month]}\n`;
+    monthStr += `\t\t\t${' '.repeat(7)}${months[--month]}\n`;
 
     monthStr += `${delimiter}\n`;
     
@@ -81,8 +101,9 @@ const drawCalendar = (year, month) => {
        
 }
 
-drawCalendar(2000, "February")
-drawCalendar(2001, "February")
-drawCalendar(2001, 2)
+// drawCalendar(2000, "February")
+// drawCalendar(2001, "February")
+// drawCalendar(2001, 2)
 
-drawCalendar(2025, 3)
+//drawCalendar(2025, 3)
+drawCalendar(2024, 0)
