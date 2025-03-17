@@ -15,5 +15,3 @@ const quadraticEquation = (a, b, c) => {
 console.log(quadraticEquation(1, -8 , 72));
 console.log(quadraticEquation(1, 12, 36));
 console.log(quadraticEquation(1, 6, 1));
-
-
