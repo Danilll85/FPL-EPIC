@@ -3,6 +3,7 @@ function bind(fn, context, args) {
     return fn.apply(context, args);
   };
 }
+
 const foo = function () {
   console.log(arguments);
   return this.name;

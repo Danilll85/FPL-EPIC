@@ -6,6 +6,7 @@ const object = {
   set magicProperty(value) {
     this.counter = value;
     console.log(`${this.getDate()} -- ${this.counter}`);
+    //console.log(`${new Date()} -- ${this.counter}`);
   },
   getDate() {
     const date = new Date();
