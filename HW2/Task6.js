@@ -11,4 +11,4 @@ console.log(new Date()); // Sun Oct 08 2017 10:44:34 GMT+0300 (+03)
 await sleep(9);
 console.log(new Date()); // Sun Oct 08 2017 10:44:43 GMT+0300 (+03)
 
-//I don't know how to implement this without async/await, also we cannot use only setTimeout because of event loop
+//I'am curious, is there a solution without async/await? Also we cannot use only setTimeout because of event loop
