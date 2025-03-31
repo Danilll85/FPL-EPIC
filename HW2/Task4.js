@@ -21,3 +21,4 @@ const curry = (fn) => {
 }
 
 console.log(curry(sum2)(1)(2));
+console.log(curry(sum4)(2)(3)(4)(5));
