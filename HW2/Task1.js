@@ -10,7 +10,9 @@ const foo = function () {
 };
 
 /*
-Can we explain to me, how can we do that with arrow function, if we all know, that arrow functions haven't got a 'this' keyword?
+can you explain to me how is this possible using arrow function? 
+as we all know, 'this' inside the arrow function will always refer to the 'this' where the arrow function was defined, 
+not the context we're trying to bind, so arrow functions won't work.
 const foo = () => {
   return this.name;
 };
