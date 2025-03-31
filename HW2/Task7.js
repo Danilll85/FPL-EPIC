@@ -26,7 +26,7 @@ c.log() // 5 <- should outputs the result
   .log() // 9
   .add(3)
   .log() // 12
-  .reset() // <- resets the result
+  .reset() // <-  resets the result
   .log() // 0
   .add(8)
   .log(); // 8
