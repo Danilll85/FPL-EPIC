@@ -17,6 +17,21 @@ export const InputDate = () => {
     "December",
   ];
 
+  const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    if (value.length > 4) {
+      event.target.value = value.slice(0, 4);
+      return;
+    }
+
+    const year = +event.target.value;
+
+    if (year >= 1900 && year <= 2030) {
+      store.dispatch({ type: "changeYear", value: year } satisfies ChangeYearAction);
+    }
+  };
+
   return (
     <div className="input-wrapper">
       <span>Set Date</span>
@@ -39,11 +54,27 @@ export const InputDate = () => {
       </select>
       <input
         type="number"
-        min={1950}
-        max={2025}
-        onChange={($event) =>
-          store.dispatch({ type: "changeYear", value: +$event.target.value } satisfies ChangeYearAction)
-        }
+        placeholder="Choose Year between 1900 and 2030"
+        min={1900}
+        max={2030}
+        onKeyDown={(e) => {
+          if (
+            !(
+              /[0-9]/.test(e.key) ||
+              e.key === "Backspace" ||
+              e.key === "Delete" ||
+              e.key === "ArrowLeft" ||
+              e.key === "ArrowRight" ||
+              e.key === "Tab"
+            )
+          ) {
+            e.preventDefault();
+          }
+        }}
+        // onChange={($event) =>
+        //   store.dispatch({ type: "changeYear", value: +$event.target.value } satisfies ChangeYearAction)
+        // }
+        onChange={handleYearChange}
       />
     </div>
   );
