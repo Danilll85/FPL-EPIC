@@ -8,7 +8,7 @@ import {
 } from "../../utils/calendarUtils";
 import "./Calendar.scss";
 
-interface CalendarProps {
+type CalendarProps = {
     month: string;
     year: number;
 }

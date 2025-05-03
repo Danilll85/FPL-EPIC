@@ -71,9 +71,6 @@ export const InputDate = () => {
             e.preventDefault();
           }
         }}
-        // onChange={($event) =>
-        //   store.dispatch({ type: "changeYear", value: +$event.target.value } satisfies ChangeYearAction)
-        // }
         onChange={handleYearChange}
       />
     </div>

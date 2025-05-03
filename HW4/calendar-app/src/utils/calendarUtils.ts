@@ -1,4 +1,4 @@
-export interface CalendarDay {
+export type CalendarDay = {
     day: number;
     currentMonth: boolean;
     isToday: boolean;
