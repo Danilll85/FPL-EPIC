@@ -1,0 +1,24 @@
+.input-wrapper {
+  border: 1px solid black;
+  display: flex;
+  align-items: column;
+  align-items: center;
+
+  button {
+    border: none;
+    cursor: pointer;
+  }
+
+  #close-btn {
+    background-color: transparent;
+    align-self: flex-end;
+  }
+
+  #save-btn {
+    background-color: #4285f4;
+    padding: 10px;
+    width: 80px;
+    border-radius: 10px;
+    color: white;
+  }
+}
