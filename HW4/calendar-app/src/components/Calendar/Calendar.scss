@@ -84,22 +84,27 @@
       padding: 10px;
       width: 40px;
       height: 40px;
-      cursor: default;
   
       &.other-month {
         color: #aaa;
         background-color: #f9f9f9;
       }
   
-      &.today {
-        background-color: #4285f4;
-        color: white;
-        font-weight: bold;
-        position: relative;
+      // &.today {
+      //   background-color: #4285f4;
+      //   color: black;
+      //   font-weight: bold;
+      //   position: relative;
   
-        &.other-month {
-          background-color: #a1c3f7;
-        }
+      //   &.other-month {
+      //     background-color: #a1c3f7;
+      //   }
+      // }
+    
+      .today {
+        background-color: #4285f4;
+        border-radius: 50%;
+        color: white;
       }
     }
   

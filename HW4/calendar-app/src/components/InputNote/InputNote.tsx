@@ -6,9 +6,10 @@ type propTypes = {
   day: string;
   month: string;
   year: string;
+  setModalOn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const InputNote = ({ day, month, year }: propTypes) => {
+export const InputNote = ({ day, month, year, setModalOn }: propTypes) => {
   const [titleText, setTitleText] = useState("");
   const [descText, setDescText] = useState("");
 
@@ -26,6 +27,10 @@ export const InputNote = ({ day, month, year }: propTypes) => {
     } else {
       setTitleText(e.target.value);
     }
+  };
+
+  const hideModal = () => {
+    setModalOn(false);
   };
 
   const saveNote = () => {
@@ -46,11 +51,14 @@ export const InputNote = ({ day, month, year }: propTypes) => {
 
     setTitleText("");
     setDescText("");
+    hideModal();
   };
 
   return (
-    <div className="input-wrapper">
-      <button id="close-btn">x</button>
+    <div className="input-wrapper" draggable={true}>
+      <button id="close-btn" onClick={hideModal}>
+        x
+      </button>
       <h3>Add Note</h3>
       <input type="text" placeholder="add title" onChange={handleChange} value={titleText} />
       <textarea placeholder="add description" onChange={handleChange} value={descText} />

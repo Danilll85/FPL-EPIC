@@ -3,18 +3,28 @@ import { store, ChangeMonthAction, ChangeYearAction } from "../../store/store";
 import { generateCalendar, months, weekDays, CalendarDay } from "../../utils/calendarUtils";
 import { InputNote } from "../InputNote/InputNote";
 import "./Calendar.scss";
+import { convertDate } from "../../utils/convertDate";
 
 type CalendarProps = {
   month: string;
   year: number;
 };
 
+type Note = {
+  title: string;
+  description?: string;
+};
+
 export const Calendar = ({ month, year }: CalendarProps) => {
   const [calendarDays, setCalendarDays] = useState<CalendarDay[][]>([]);
-  const [currentday, setCurrentDay] = useState("");
   const [currentMonth, setCurrentMonth] = useState(month);
   const [currentYear, setCurrentYear] = useState(year);
   const [isModalOn, setModalOn] = useState(false);
+  const [currentX, setCurrentX] = useState(0);
+  const [currentY, setCurrentY] = useState(0);
+  const [modalDay, setModalDay] = useState("");
+  const [modalMonth, setModalMonth] = useState(month);
+  const [modalYear, setModalYear] = useState(year);
 
   useEffect(() => {
     setCalendarDays(generateCalendar(currentMonth, currentYear));
@@ -26,7 +36,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     });
 
     return unsubscribe;
-  }, [currentMonth, currentYear]);
+  }, [currentMonth, currentYear, isModalOn]);
 
   const dispatchDate = (monthIndex: number, year: number) => {
     store.dispatch({
@@ -59,10 +69,62 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     dispatchDate(today.getMonth(), today.getFullYear());
   };
 
-  const showModal = (e: React.MouseEvent) => {
-    setCurrentDay(e.currentTarget.innerHTML);
+  const showModal = (e: React.MouseEvent<HTMLElement>, weekIndex: number, dayIndex: number) => {
+    const target = e.target as HTMLElement;
+    const day = target.innerText as string;
+    const isCurrentMonth = calendarDays[weekIndex][dayIndex].currentMonth;
+
+    console.log(isCurrentMonth);
+
+    if (!isCurrentMonth) {
+      const index = months.findIndex((m) => m === currentMonth);
+      if (weekIndex > 2) {
+        setModalMonth(months[index + 1 === 12 ? 0 : index + 1]);
+        setModalYear(index + 1 === 12 ? currentYear + 1 : currentYear);
+      } else {
+        setModalMonth(months[index - 1 === -1 ? 11 : index - 1]);
+        setModalYear(index - 1 === -1 ? currentYear - 1 : currentYear);
+      }
+    } else {
+      setModalMonth(currentMonth);
+      setModalYear(currentYear);
+    }
+
+    console.log(calendarDays);
+    console.log(weekIndex, dayIndex);
+
+    setCurrentX(e.clientX);
+    setCurrentY(e.clientY);
+    setModalDay(day);
     setModalOn(true);
   };
+
+  const drawNotes = (day: CalendarDay, weekIndex: number) => {
+    let keyMonth: string = currentMonth;
+    let keyYear: number = currentYear;
+    if (!day.currentMonth) {
+      const index = months.findIndex((m) => m === currentMonth);
+      
+      if (weekIndex > 2) {
+        const nextMonth = index === 11 ? 0 : index + 1;
+        keyMonth = months[nextMonth];
+        keyYear = nextMonth === 0 ? keyYear + 1 : keyYear;
+      } else {
+        const prevMonth = index === 0 ? 11 : index - 1;
+        keyMonth = months[prevMonth];
+        keyYear = prevMonth === 11 ? keyYear - 1 : keyYear;
+      }
+    } 
+  
+    const key: string = convertDate(day.day.toString(), keyMonth, keyYear.toString());
+
+    const notes: Note[] = JSON.parse(localStorage.getItem(key) as string);
+    
+    const noteElements = notes.map((note: Note, index: number) => <div className="note-elem" key={`${index}-${note.title}`}>{note.title}</div>)
+
+    return noteElements;
+  };
+
 
   return (
     <div className="calendar-container">
@@ -82,7 +144,6 @@ export const Calendar = ({ month, year }: CalendarProps) => {
           &gt;
         </button>
       </div>
-
       <div className="calendar-table">
         <table>
           <thead>
@@ -100,10 +161,45 @@ export const Calendar = ({ month, year }: CalendarProps) => {
                 {week.map((day, dayIndex) => (
                   <td
                     key={`day-${weekIndex}-${dayIndex}`}
-                    className={`date-cell ${!day.currentMonth ? "other-month" : ""} ${day.isToday ? "today" : ""}`}
-                    onClick={showModal}
+                    className={`date-cell ${!day.currentMonth ? "other-month" : ""} `}
+                    onClick={(e) => {
+                      showModal(e, weekIndex, dayIndex);
+                    }}
                   >
-                    {day.day}
+                    <div className={day.isToday ? "today" : ""}>{day.day}</div>
+                    <div className="notes-wrapper">
+                      {
+                        day.hasNotes && drawNotes(day, weekIndex)
+                        // JSON.parse(
+                        //   localStorage.getItem(
+                        //     convertDate(
+                        //       day.day.toString(),
+                        //       months[months.findIndex((m) => m === currentMonth) - 1],
+                        //       (months.findIndex((m) => m === currentMonth) - 1 === -1
+                        //         ? currentYear - 1
+                        //         : currentYear
+                        //       ).toString()
+                        //     ) ||
+                        //       convertDate(day.day.toString(), currentMonth, currentYear.toString()) ||
+                        //       convertDate(
+                        //         day.day.toString(),
+                        //         months[months.findIndex((m) => m === currentMonth) - 1],
+                        //         (months.findIndex((m) => m === currentMonth) + 1 === 12
+                        //           ? currentYear + 1
+                        //           : currentYear
+                        //         ).toString()
+                        //       )
+                        //   ) as string
+                        //)
+                        // .map((note: Note, index: number) => {
+                        //   return (
+                        //     <div className="note-elem" key={`${index}-${note.title}`}>
+                        //       {note.title}
+                        //     </div>
+                        //   );
+                        // })
+                      }
+                    </div>
                   </td>
                 ))}
               </tr>
@@ -111,8 +207,11 @@ export const Calendar = ({ month, year }: CalendarProps) => {
           </tbody>
         </table>
         {isModalOn && (
-          <div className="input-note-wrapper">
-            <InputNote day={currentday} month={currentMonth} year={currentYear.toString()} />
+          <div
+            className="input-note-wrapper"
+            style={{ position: "absolute", top: `${currentY + 10}px`, left: `${currentX + 10}px` }}
+          >
+            <InputNote day={modalDay} month={modalMonth} year={modalYear.toString()} setModalOn={setModalOn} />
           </div>
         )}
       </div>

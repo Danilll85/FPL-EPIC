@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { months } from "../utils/calendarUtils";
 
 type State = {
   month: string;
@@ -7,19 +8,19 @@ type State = {
 
 export type ChangeMonthAction = {
   type: "changeMonth";
-  value: string
+  value: string;
 };
 
 export type ChangeYearAction = {
   type: "changeYear";
-  value: number,
+  value: number;
 };
 
 type Action = ChangeMonthAction | ChangeYearAction;
 
 const initialState: State = {
-  month: "April",
-  year: 2025,
+  month: months[new Date().getMonth()],
+  year: new Date().getFullYear(),
 };
 
 const reducer = (state = initialState, action: Action): State => {
@@ -27,15 +28,15 @@ const reducer = (state = initialState, action: Action): State => {
     case "changeMonth":
       return {
         ...state,
-        month: action.value
+        month: action.value,
       };
     case "changeYear":
       return {
         ...state,
-        year: action.value
+        year: action.value,
       };
-    default: 
-     return state;
+    default:
+      return state;
   }
 };
 

@@ -16,7 +16,9 @@ const months = {
 type MonthKey = keyof typeof months;
 
 export const convertDate = (day: string, month: string, year: string): string => {
-    if (month.toLowerCase() in months) {
+  console.log(`[convertDate] ${day}-${month}-${year}`);
+
+  if (month.toLowerCase() in months) {
     return `${day}-${months[month.toLowerCase() as MonthKey]}-${year}`;
   }
   throw new Error("Invalid month");
