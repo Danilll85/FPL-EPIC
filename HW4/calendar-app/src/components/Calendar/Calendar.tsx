@@ -104,7 +104,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     let keyYear: number = currentYear;
     if (!day.currentMonth) {
       const index = months.findIndex((m) => m === currentMonth);
-      
+
       if (weekIndex > 2) {
         const nextMonth = index === 11 ? 0 : index + 1;
         keyMonth = months[nextMonth];
@@ -114,17 +114,24 @@ export const Calendar = ({ month, year }: CalendarProps) => {
         keyMonth = months[prevMonth];
         keyYear = prevMonth === 11 ? keyYear - 1 : keyYear;
       }
-    } 
-  
+    }
+
     const key: string = convertDate(day.day.toString(), keyMonth, keyYear.toString());
 
     const notes: Note[] = JSON.parse(localStorage.getItem(key) as string);
-    
-    const noteElements = notes.map((note: Note, index: number) => <div className="note-elem" key={`${index}-${note.title}`}>{note.title}</div>)
 
-    return noteElements;
+    if (notes) {
+      const noteElements = notes.map((note: Note, index: number) => (
+        <div className="note-elem" key={`${index}-${note.title}`}>
+          {note.title}
+        </div>
+      ));
+
+      return noteElements;
+    }
+
+    return null;
   };
-
 
   return (
     <div className="calendar-container">
@@ -167,39 +174,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
                     }}
                   >
                     <div className={day.isToday ? "today" : ""}>{day.day}</div>
-                    <div className="notes-wrapper">
-                      {
-                        day.hasNotes && drawNotes(day, weekIndex)
-                        // JSON.parse(
-                        //   localStorage.getItem(
-                        //     convertDate(
-                        //       day.day.toString(),
-                        //       months[months.findIndex((m) => m === currentMonth) - 1],
-                        //       (months.findIndex((m) => m === currentMonth) - 1 === -1
-                        //         ? currentYear - 1
-                        //         : currentYear
-                        //       ).toString()
-                        //     ) ||
-                        //       convertDate(day.day.toString(), currentMonth, currentYear.toString()) ||
-                        //       convertDate(
-                        //         day.day.toString(),
-                        //         months[months.findIndex((m) => m === currentMonth) - 1],
-                        //         (months.findIndex((m) => m === currentMonth) + 1 === 12
-                        //           ? currentYear + 1
-                        //           : currentYear
-                        //         ).toString()
-                        //       )
-                        //   ) as string
-                        //)
-                        // .map((note: Note, index: number) => {
-                        //   return (
-                        //     <div className="note-elem" key={`${index}-${note.title}`}>
-                        //       {note.title}
-                        //     </div>
-                        //   );
-                        // })
-                      }
-                    </div>
+                    <div className="notes-wrapper">{day.hasNotes && drawNotes(day, weekIndex)}</div>
                   </td>
                 ))}
               </tr>
