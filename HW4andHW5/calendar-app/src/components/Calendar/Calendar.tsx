@@ -75,7 +75,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     const day = target.innerText as string;
     const isCurrentMonth = calendarDays[weekIndex][dayIndex].currentMonth;
 
-    console.log(isCurrentMonth);
+    //console.log(isCurrentMonth);
 
     if (!isCurrentMonth) {
       const index = months.findIndex((m) => m === currentMonth);
@@ -91,8 +91,8 @@ export const Calendar = ({ month, year }: CalendarProps) => {
       setModalYear(currentYear);
     }
 
-    console.log(calendarDays);
-    console.log(weekIndex, dayIndex);
+    //console.log(calendarDays);
+    //console.log(weekIndex, dayIndex);
 
     setCurrentX(e.clientX);
     setCurrentY(e.clientY);
@@ -104,8 +104,6 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     const notes = JSON.parse(localStorage.getItem(key) as string);
 
     notes.splice(index, 1);
-    console.log("triggered");
-    console.log(index, key);
 
     if (notes.length === 0) {
       localStorage.removeItem(key);
@@ -120,17 +118,19 @@ export const Calendar = ({ month, year }: CalendarProps) => {
   const drawNotes = (day: CalendarDay, weekIndex: number) => {
     let keyMonth: string = currentMonth;
     let keyYear: number = currentYear;
+
     if (!day.currentMonth) {
       const index = months.findIndex((m) => m === currentMonth);
-
       if (weekIndex > 2) {
         const nextMonth = index === 11 ? 0 : index + 1;
         keyMonth = months[nextMonth];
         keyYear = nextMonth === 0 ? keyYear + 1 : keyYear;
+        console.log(`next month ${keyMonth} ${keyYear}`);
       } else {
         const prevMonth = index === 0 ? 11 : index - 1;
         keyMonth = months[prevMonth];
         keyYear = prevMonth === 11 ? keyYear - 1 : keyYear;
+        console.log(`prev month ${keyMonth} ${keyYear}`);
       }
     }
 

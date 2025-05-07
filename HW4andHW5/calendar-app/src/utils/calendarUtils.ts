@@ -37,11 +37,14 @@ export const generateCalendar = (month: string, year: number): CalendarDay[][] =
   const lastDate = new Date(year, monthIndex + 1, 0).getDate(); //day number
   const prevLastDate = new Date(year, monthIndex, 0).getDate();
 
+  const nextMonthIndex = monthIndex === 11 ? 0 : monthIndex + 1;
+  const nextMonthYear = monthIndex === 11 ? year + 1 : year;
+
   const keysFromLocaleStorage: string[] = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i) as string;
     keysFromLocaleStorage.push(key);
-    console.log(`[key] ${key}`);
+    //console.log(`[key] ${key}`);
   }
 
   const calendar: CalendarDay[][] = [];
@@ -62,8 +65,8 @@ export const generateCalendar = (month: string, year: number): CalendarDay[][] =
 
   for (let i = 1; i <= lastDate; i++) {
     const flag: boolean = keysFromLocaleStorage.includes(
-        `${i}-${monthIndex == 0 ? 11 : monthIndex}-${monthIndex == 0 ? year - 1 : year}`
-      );
+      `${i}-${monthIndex == 0 ? 11 : monthIndex}-${monthIndex == 0 ? year - 1 : year}`
+    );
     week.push({
       day: i,
       currentMonth: true,
@@ -79,11 +82,13 @@ export const generateCalendar = (month: string, year: number): CalendarDay[][] =
 
   let nextDay = 1;
   while (week.length && week.length < 7) {
+    const day = nextDay++;
+    const hasNotes = keysFromLocaleStorage.includes(`${day}-${nextMonthIndex}-${nextMonthYear}`);
     week.push({
-      day: nextDay++,
+      day: day,
       currentMonth: false,
       isToday: false,
-      hasNotes: false,
+      hasNotes: hasNotes,
     });
   }
 
@@ -94,11 +99,13 @@ export const generateCalendar = (month: string, year: number): CalendarDay[][] =
   while (calendar.length < 6) {
     const extraWeek: CalendarDay[] = [];
     for (let i = 0; i < 7; i++) {
+      const day = nextDay++;
+      const hasNotes = keysFromLocaleStorage.includes(`${day}-${nextMonthIndex}-${nextMonthYear}`);
       extraWeek.push({
-        day: nextDay++,
+        day: day,
         currentMonth: false,
         isToday: false,
-        hasNotes: false,
+        hasNotes: hasNotes,
       });
     }
     calendar.push(extraWeek);

@@ -13,7 +13,7 @@ export const InputNote = ({ day, month, year, setModalOn }: propTypes) => {
   const [titleText, setTitleText] = useState("");
   const [descText, setDescText] = useState("");
 
-  console.log(day, month, year);
+  //console.log(day, month, year);
 
   const isTextAreaEvent = (
     e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>
