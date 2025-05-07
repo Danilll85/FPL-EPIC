@@ -25,6 +25,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
   const [modalDay, setModalDay] = useState("");
   const [modalMonth, setModalMonth] = useState(month);
   const [modalYear, setModalYear] = useState(year);
+  const [notesVersion, setNotesVersion] = useState(0);
 
   useEffect(() => {
     setCalendarDays(generateCalendar(currentMonth, currentYear));
@@ -36,7 +37,7 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     });
 
     return unsubscribe;
-  }, [currentMonth, currentYear, isModalOn]);
+  }, [currentMonth, currentYear, isModalOn, notesVersion]);
 
   const dispatchDate = (monthIndex: number, year: number) => {
     store.dispatch({
@@ -99,6 +100,23 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     setModalOn(true);
   };
 
+  const removeNote = (key: string, index: number): void => {
+    const notes = JSON.parse(localStorage.getItem(key) as string);
+
+    notes.splice(index, 1);
+    console.log("triggered");
+    console.log(index, key);
+
+    if (notes.length === 0) {
+      localStorage.removeItem(key);
+      setNotesVersion((prev) => prev + 1);
+      return;
+    }
+
+    localStorage.setItem(key, JSON.stringify(notes));
+    setNotesVersion((prev) => prev + 1);
+  };
+
   const drawNotes = (day: CalendarDay, weekIndex: number) => {
     let keyMonth: string = currentMonth;
     let keyYear: number = currentYear;
@@ -123,7 +141,15 @@ export const Calendar = ({ month, year }: CalendarProps) => {
     if (notes) {
       const noteElements = notes.map((note: Note, index: number) => (
         <div className="note-elem" key={`${index}-${note.title}`}>
-          {note.title}
+          {note.title}{" "}
+          <button
+            id="remove-note"
+            onClick={() => {
+              removeNote(key, index);
+            }}
+          >
+            <img src="../../assets/trash.svg" alt="drop" />
+          </button>
         </div>
       ));
 
@@ -169,11 +195,16 @@ export const Calendar = ({ month, year }: CalendarProps) => {
                   <td
                     key={`day-${weekIndex}-${dayIndex}`}
                     className={`date-cell ${!day.currentMonth ? "other-month" : ""} `}
-                    onClick={(e) => {
-                      showModal(e, weekIndex, dayIndex);
-                    }}
                   >
-                    <div className={day.isToday ? "today" : ""}>{day.day}</div>
+                    <div
+                      className={day.isToday ? "today" : ""}
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        showModal(e, weekIndex, dayIndex);
+                      }}
+                    >
+                      {day.day}
+                    </div>
                     <div className="notes-wrapper">{day.hasNotes && drawNotes(day, weekIndex)}</div>
                   </td>
                 ))}
