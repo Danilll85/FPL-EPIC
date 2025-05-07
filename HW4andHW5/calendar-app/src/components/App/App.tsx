@@ -1,6 +1,6 @@
-import { Calendar } from "../Calendar/Calendar";
+import { Calendar } from "../Calendar/Calendar.tsx";
 import { InputDate } from "../InputDate/InputDate.tsx";
-import { store } from "../../store/store";
+import { store } from "../../store/store.ts";
 
 function App() {
   return (
