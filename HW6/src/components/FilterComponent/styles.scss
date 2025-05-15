@@ -1,0 +1,34 @@
+#filter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid black;
+  margin-inline: 400px;
+  width: 100%;
+  max-width: 380px;
+  margin: 20px auto;
+  padding: 20px;
+
+  &::before {
+    position: absolute;
+    top: -10px;
+    padding-inline: 5px;
+    content: "Filter";
+    background-color: white;
+  }
+}
+
+.filter-options {
+    display: flex;
+    gap: 8px;
+    .date-input {
+        width: 18px;
+    }
+}
+
+.show-completed-block {
+    display: flex;
+    gap: 4px;
+    margin-right: 16px;
+}

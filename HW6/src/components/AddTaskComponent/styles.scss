@@ -1,0 +1,44 @@
+#add-task {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid black;
+  margin-inline: 400px;
+  width: 100%;
+  max-width: 380px;
+  margin: 20px auto;
+  padding: 20px;
+
+  &::before {
+    position: absolute;
+    top: -10px;
+    padding-inline: 5px;
+    content: "Add Task";
+    background-color: white;
+  }
+}
+
+.full-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+
+  .main-info {
+    display: flex;
+    justify-content: start;
+    gap: 8px;
+  }
+
+  textarea {
+    box-sizing: border-box;
+    resize: vertical;
+    align-self: normal;
+  }
+}
+
+#add-button {
+  align-self: flex-end;
+  cursor: pointer;
+}
