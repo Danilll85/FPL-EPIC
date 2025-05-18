@@ -1,4 +1,6 @@
 import "./styles.scss";
+import { currentTasks } from "../..";
+import { task } from "../types/taskType";
 
 export const createAddTaskComponent = () => {
   const container = document.getElementById("add-task") as HTMLElement;
@@ -51,7 +53,49 @@ export const createAddTaskComponent = () => {
   const addBtn = document.createElement("button");
   addBtn.id = "add-button";
   addBtn.textContent = "Add";
+  addBtn.addEventListener("click", () => {
+    if (!titleInput.value.trim()) {
+      alert("add required info");
+      return;
+    }
+
+    const task: task = {
+      isCompleted: false,
+      title: titleInput.value,
+      priority: prioritySelection.value,
+      date: inputDate.value,
+      description: descriptionInput.value,
+    };
+
+    console.log(currentTasks);
+
+    addToLocaleStorage(task);
+
+    currentTasks.push(task);
+
+    clearAddTaskInputs(titleInput, prioritySelection, inputDate, descriptionInput);
+  });
 
   container.appendChild(fullInfo);
   container.appendChild(addBtn);
+};
+
+const clearAddTaskInputs = (
+  titleInput: HTMLInputElement,
+  priorityInput: HTMLSelectElement,
+  dateInput: HTMLInputElement,
+  descriptionInput: HTMLTextAreaElement
+): void => {
+  titleInput.value = "";
+  priorityInput.value = "";
+  dateInput.value = "";
+  descriptionInput.value = "";
+};
+
+const addToLocaleStorage = (task: task): void => {
+  const tmp = JSON.parse(localStorage.getItem("toDoTasks") as string);
+  tmp.push(task);
+  console.log(tmp);
+
+  localStorage.setItem("toDoTasks", JSON.stringify(tmp));
 };
