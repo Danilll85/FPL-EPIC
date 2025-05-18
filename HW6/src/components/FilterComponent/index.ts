@@ -11,6 +11,7 @@ export const createFilterComponent = () => {
   showCompletedBlock.classList.add("show-completed-block");
   const checkboxInput = document.createElement("input");
   checkboxInput.type = "checkbox";
+  checkboxInput.id = 'show-completed';
   checkboxInput.addEventListener("change", (e) => handleCheck(e));
 
   const checkboxTitle = document.createElement("span");

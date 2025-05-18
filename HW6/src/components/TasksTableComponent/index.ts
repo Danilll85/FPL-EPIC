@@ -12,7 +12,7 @@ export const createTasksTableComponent = (tasksArr: task[] = currentTasks) => {
     const th = document.createElement("th");
 
     const thContentWrapper = document.createElement("div");
-    thContentWrapper.classList.add('th-content-wrapper');
+    thContentWrapper.classList.add("th-content-wrapper");
 
     const headerText = document.createElement("div");
     headerText.textContent = headerTitles[i];
@@ -36,19 +36,30 @@ export const createTasksTableComponent = (tasksArr: task[] = currentTasks) => {
 
   table.appendChild(tableRowHeader);
 
+  const input = document.getElementById("show-completed") as HTMLInputElement;
+  if (input.checked) {
+    tasksArr = tasksArr.filter((task) => task.isCompleted === true);
+  } else {
+    tasksArr = tasksArr.filter((task) => task.isCompleted === false);
+  }
+
   const tableSize = tasksArr.length;
   for (let i = 0; i < tableSize; i++) {
     const tr = document.createElement("tr");
     const task = Object.values(tasksArr[i]);
 
+    const originalIndex = currentTasks.findIndex(
+      (t) => t.title === task[1] && t.priority === task[2] && t.date === task[3]
+    );
     for (let j = 0; j < 4; j++) {
       const td = document.createElement("td");
 
       if (j == 0) {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.style.cursor = "pointer";
 
-        checkbox.addEventListener('change', (e) => changeTaskStatus(e, i))
+        checkbox.addEventListener("change", (e) => changeTaskStatus(e, originalIndex));
 
         if (task[j]) {
           checkbox.checked = true;
@@ -75,9 +86,8 @@ export const removeTasksTableComponent = () => {
 
 export const changeTaskStatus = (e: Event, index: number) => {
   const target = e.target as HTMLInputElement;
-  console.log(target.checked);
-    
-  currentTasks[index] = {...currentTasks[index], isCompleted: target.checked};
-  
+  currentTasks[index] = { ...currentTasks[index], isCompleted: target.checked };
   localStorage.setItem(key, JSON.stringify(currentTasks));
-}
+  removeTasksTableComponent();
+  createTasksTableComponent();
+};
