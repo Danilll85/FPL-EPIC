@@ -4,6 +4,7 @@ import "./components/TasksTableComponent/index";
 import { createTasksTableComponent, removeTasksTableComponent } from "./components/TasksTableComponent/index";
 import { task } from "./components/types/taskType";
 
+export const key = "toDoTasks";
 
 export let currentTasks: task[] = JSON.parse(localStorage.getItem("toDoTasks") as string);
 if (!currentTasks) {

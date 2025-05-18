@@ -1,4 +1,4 @@
-import { currentTasks } from "../..";
+import { currentTasks, key } from "../..";
 import { task } from "../types/taskType";
 import "./styles.scss";
 
@@ -48,6 +48,8 @@ export const createTasksTableComponent = (tasksArr: task[] = currentTasks) => {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
 
+        checkbox.addEventListener('change', (e) => changeTaskStatus(e, i))
+
         if (task[j]) {
           checkbox.checked = true;
         }
@@ -70,3 +72,12 @@ export const removeTasksTableComponent = () => {
   const container = document.getElementById("to-do-block");
   container?.replaceChildren();
 };
+
+export const changeTaskStatus = (e: Event, index: number) => {
+  const target = e.target as HTMLInputElement;
+  console.log(target.checked);
+    
+  currentTasks[index] = {...currentTasks[index], isCompleted: target.checked};
+  
+  localStorage.setItem(key, JSON.stringify(currentTasks));
+}
