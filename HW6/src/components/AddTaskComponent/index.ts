@@ -88,7 +88,7 @@ const clearAddTaskInputs = (
 ): void => {
   titleInput.value = "";
   priorityInput.value = "";
-  dateInput.value = "";
+  dateInput.valueAsDate = null; 
   descriptionInput.value = "";
 };
 

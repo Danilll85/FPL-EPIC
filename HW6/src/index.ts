@@ -20,10 +20,9 @@ createAddTaskComponent();
 createFilterComponent();
 createTasksTableComponent();
 
-
 const intervalId = setInterval(() => {
-  console.log('[interval]');
-  
+  console.log("[interval]");
+
   if (currentTasks.length == currentLength) return;
 
   currentLength = currentTasks.length;
