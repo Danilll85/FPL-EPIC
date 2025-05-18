@@ -1,3 +1,5 @@
+import { currentTasks } from "../..";
+import { createTasksTableComponent, removeTasksTableComponent } from "../TasksTableComponent";
 import "./styles.scss";
 
 export const createFilterComponent = () => {
@@ -9,6 +11,8 @@ export const createFilterComponent = () => {
   showCompletedBlock.classList.add("show-completed-block");
   const checkboxInput = document.createElement("input");
   checkboxInput.type = "checkbox";
+  checkboxInput.addEventListener("change", (e) => handleCheck(e));
+
   const checkboxTitle = document.createElement("span");
   checkboxTitle.textContent = "Show completed";
   showCompletedBlock.appendChild(checkboxInput);
@@ -45,10 +49,26 @@ export const createFilterComponent = () => {
   filterOptions.appendChild(dateToLabel);
   filterOptions.appendChild(dateToInput);
 
-  const search = document.createElement('input');
-  search.type = 'text';
-  search.placeholder = 'Text search (title + description)';
+  const search = document.createElement("input");
+  search.type = "text";
+  search.placeholder = "Text search (title + description)";
 
   filterContainer?.appendChild(filterOptions);
   filterContainer?.appendChild(search);
+};
+
+const handleCheck = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+
+  if (target.checked) {
+    //true
+    const filteredTasks = currentTasks.filter((task) => task.isCompleted === true);
+    removeTasksTableComponent();
+    createTasksTableComponent(filteredTasks);
+    return;
+  }
+
+  const filteredTasks = currentTasks.filter((task) => task.isCompleted === false);
+  removeTasksTableComponent();
+  createTasksTableComponent(filteredTasks);
 };

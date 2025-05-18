@@ -1,6 +1,29 @@
 #to-do-block {
-  display: block;
+  // display: block;
   width: 100%;
   max-width: 380px;
   margin: 20px auto;
+}
+
+
+.th-content-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+
+.sort-btns-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0px;
+
+  button {
+    display: inline;
+    padding: 0;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+  }
 }

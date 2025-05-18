@@ -1,5 +1,5 @@
 export type task = {
-    isCompleted: false;
+    isCompleted: boolean;
     title: string;
     priority: string;
     date: string;
