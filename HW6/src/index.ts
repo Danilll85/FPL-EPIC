@@ -14,8 +14,6 @@ if (!currentTasks) {
 
 let currentLength = currentTasks.length;
 
-console.log(`[main] ${currentTasks}`);
-
 createAddTaskComponent();
 createFilterComponent();
 createTasksTableComponent();

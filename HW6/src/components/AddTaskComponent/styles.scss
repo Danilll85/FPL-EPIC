@@ -42,3 +42,19 @@
   align-self: flex-end;
   cursor: pointer;
 }
+
+.bottom-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.error-field {
+  border: 1px solid red;
+  box-shadow: 0 0 3px rgba(255, 0, 0, 0.5);
+}
+
+.error-message {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.9em;
+}
