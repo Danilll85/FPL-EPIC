@@ -1,1 +1,1 @@
-export type Status = 'active' | 'pending' | 'inactive';
+export type Status = 'pending' | 'sent' | 'delivered' | 'read' | 'failed';
