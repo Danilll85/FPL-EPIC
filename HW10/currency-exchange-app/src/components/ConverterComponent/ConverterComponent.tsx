@@ -1,12 +1,24 @@
-import { FormControl, InputLabel, Select, MenuItem, Button, TextField, SvgIcon } from "@mui/material";
-import { Header1, ConverterComponentWrapper, ConvertBlock } from "./styles";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  TextField,
+  SvgIcon,
+  type SelectChangeEvent,
+} from "@mui/material";
+import { Header1, ConverterComponentWrapper, ConvertBlock, ResultBlock, Result, PopularCurrenciesBlock } from "./styles";
 import { useEffect, useState } from "react";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
 
 export const ConverterComponent = () => {
   const [amount, setAmount] = useState("0");
-  const [currencies, setCurrencies] = useState([]);
+  const [convertedValue, setConvertedValue] = useState(0);
+  const [currencies, setCurrencies] = useState({});
+  const [fromCurrencyTitle, setFromCurrencyTitle] = useState("USD");
+  const [toCurrencyTitle, setToCurrencyTitle] = useState("EUR");
 
   useEffect(() => {
     fetch(URL)
@@ -37,6 +49,30 @@ export const ConverterComponent = () => {
     setAmount(value);
   };
 
+  const handleSelectChange = (e: SelectChangeEvent<typeof fromCurrencyTitle>) => {
+    const name = e.target.name;
+    name === "inputFrom" ? setFromCurrencyTitle(e.target.value) : setToCurrencyTitle(e.target.value);
+  };
+
+  const swapCurrencies = () => {
+    const tmp = fromCurrencyTitle;
+    setFromCurrencyTitle(toCurrencyTitle);
+    setToCurrencyTitle(tmp);
+  }
+
+  const convert = () => {
+    const testURL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurrencyTitle.toLowerCase()}.min.json`;
+    fetch(testURL)
+      .then((res) => {
+        const result = res.json();
+        return result;
+      })
+      .then((data) => {
+        const result = +amount * data[fromCurrencyTitle][toCurrencyTitle];
+        setConvertedValue(result);        
+      });
+  };
+
   return (
     <ConverterComponentWrapper>
       <Header1>I want to convert</Header1>
@@ -58,23 +94,23 @@ export const ConverterComponent = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={40}
             label="From"
-            //   onChange={handleChange}
+            value={fromCurrencyTitle}
+            name="inputFrom"
+            onChange={handleSelectChange}
           >
-            {currencies.map((elem) => {
-              console.log(elem);
-              
-            })
-
-            }
-            {/* <MenuItem value={10}>USD</MenuItem>
-            <MenuItem value={20}>EUR</MenuItem>
-            <MenuItem value={30}>BYN</MenuItem> */}
+            {currencies &&
+              Object.keys(currencies).map((title) => (
+                <MenuItem key={title} value={title}>
+                  {title.toUpperCase()}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 
-        <Button sx={{ marginInline: "1rem", outline: "1px solid #009788" }}>
+        <Button sx={{ marginInline: "1rem", outline: "1px solid #009788" }}
+          onClick={swapCurrencies}
+        >
           <SvgIcon>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -99,19 +135,28 @@ export const ConverterComponent = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={40}
+            value={toCurrencyTitle}
+            name="inputTo"
             label="From"
-            //   onChange={handleChange}
+            onChange={handleSelectChange}
           >
-            <MenuItem value={10}>USD</MenuItem>
-            <MenuItem value={20}>EUR</MenuItem>
-            <MenuItem value={30}>BYN</MenuItem>
+            {Object.keys(currencies).map((title) => (
+              <MenuItem key={title} value={title}>
+                {title.toUpperCase()}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
-        <Button variant="contained" sx={{ backgroundColor: "#009788", paddingInline: "2rem" }}>
+        <Button variant="contained" sx={{ backgroundColor: "#009788", paddingInline: "2rem" }} onClick={convert}>
           Convert
         </Button>
       </ConvertBlock>
+      <ResultBlock>
+        {amount} {fromCurrencyTitle.toUpperCase()}&nbsp;=&nbsp;<Result>{convertedValue} {toCurrencyTitle.toUpperCase()}</Result>
+      </ResultBlock>
+      <PopularCurrenciesBlock>
+        {}
+      </PopularCurrenciesBlock>
     </ConverterComponentWrapper>
   );
 };

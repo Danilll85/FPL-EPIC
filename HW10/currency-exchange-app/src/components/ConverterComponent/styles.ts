@@ -16,3 +16,17 @@ export const ConvertBlock = styled.div`
     flex-direction: row;    
     gap: 1rem;
 `
+
+export const ResultBlock = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
+export const Result = styled.span`
+    color: #8cc11b;
+`
+
+export const PopularCurrenciesBlock = styled.div`
+    display: flex;
+    flex-direction: column;
+`
