@@ -1,32 +1,35 @@
 import styled from "@emotion/styled";
 
 export const Header1 = styled.h1`
-    align-self: start;
-`
+  align-self: start;
+  font-family: Roboto;
+  color: #414141;
+`;
 
-export const ConverterComponentWrapper= styled.div`
-    margin-inline: 20rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
+export const ConverterComponentWrapper = styled.div`
+  margin-inline: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
 
 export const ConvertBlock = styled.div`
-    display: flex;
-    flex-direction: row;    
-    gap: 1rem;
-`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+`;
 
 export const ResultBlock = styled.div`
-    display: flex;
-    justify-content: center;
-`
+  display: flex;
+  justify-content: center;
+`;
 
 export const Result = styled.span`
-    color: #8cc11b;
-`
+  color: #8cc11b;
+`;
 
 export const PopularCurrenciesBlock = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;

@@ -8,10 +8,20 @@ import {
   SvgIcon,
   type SelectChangeEvent,
 } from "@mui/material";
-import { Header1, ConverterComponentWrapper, ConvertBlock, ResultBlock, Result, PopularCurrenciesBlock } from "./styles";
+import {
+  Header1,
+  ConverterComponentWrapper,
+  ConvertBlock,
+  ResultBlock,
+  Result,
+  PopularCurrenciesBlock,
+} from "./styles";
 import { useEffect, useState } from "react";
+import type { PopularCurrencies } from "../../interfaces/PopularCurrencies";
+import type { ApiResponse } from "../../types/generics/ApiResponse";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
+const UsdURL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
 
 export const ConverterComponent = () => {
   const [amount, setAmount] = useState("0");
@@ -19,6 +29,8 @@ export const ConverterComponent = () => {
   const [currencies, setCurrencies] = useState({});
   const [fromCurrencyTitle, setFromCurrencyTitle] = useState("USD");
   const [toCurrencyTitle, setToCurrencyTitle] = useState("EUR");
+  const [popularCurrencies, setPopularCurrencies] = useState<PopularCurrencies>({ UsdToEur: 0, EurToUsd: 0 });
+  const [showResult, setShowResult] = useState(false);
 
   useEffect(() => {
     fetch(URL)
@@ -27,13 +39,28 @@ export const ConverterComponent = () => {
         return result;
       })
       .catch((err) => {
-        console.log(`fetching error`);
+        console.log(`fetching error ${err}`);
       })
-      .then((data) => {
+      .then((data: ApiResponse) => {
         setCurrencies(data);
         console.log(data);
       });
+
+    fetch(UsdURL)
+      .then((res) => {
+        const result = res.json();
+        return result;
+      })
+      .then((data) => {
+        setPopularCurrencies({ UsdToEur: data["usd"]["eur"], EurToUsd: 1 / data["usd"]["eur"] });
+      });
   }, []);
+
+  useEffect(() => {
+    if (fromCurrencyTitle && toCurrencyTitle && amount !== "0") {
+      convert();
+    }
+  }, [fromCurrencyTitle, toCurrencyTitle, amount]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -56,20 +83,28 @@ export const ConverterComponent = () => {
 
   const swapCurrencies = () => {
     const tmp = fromCurrencyTitle;
-    setFromCurrencyTitle(toCurrencyTitle);
-    setToCurrencyTitle(tmp);
-  }
+    new Promise((res, rej): void => {
+      setFromCurrencyTitle(toCurrencyTitle);
+      setToCurrencyTitle(tmp);
+      res(0);
+    });
+  };
 
   const convert = () => {
+    if (+amount == 0) return;
+
     const testURL = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurrencyTitle.toLowerCase()}.min.json`;
     fetch(testURL)
       .then((res) => {
         const result = res.json();
         return result;
       })
+      .catch(() => {
+        throw new Error("Network response was not ok");
+      })
       .then((data) => {
         const result = +amount * data[fromCurrencyTitle][toCurrencyTitle];
-        setConvertedValue(result);        
+        setConvertedValue(result);
       });
   };
 
@@ -108,9 +143,7 @@ export const ConverterComponent = () => {
           </Select>
         </FormControl>
 
-        <Button sx={{ marginInline: "1rem", outline: "1px solid #009788" }}
-          onClick={swapCurrencies}
-        >
+        <Button sx={{ marginInline: "1rem", outline: "1px solid #009788" }} onClick={swapCurrencies}>
           <SvgIcon>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -147,15 +180,21 @@ export const ConverterComponent = () => {
             ))}
           </Select>
         </FormControl>
-        <Button variant="contained" sx={{ backgroundColor: "#009788", paddingInline: "2rem" }} onClick={convert}>
+        <Button variant="contained" sx={{ backgroundColor: "#009788", paddingInline: "2rem" }} onClick={() => {convert(); setShowResult(true)}}>
           Convert
         </Button>
       </ConvertBlock>
-      <ResultBlock>
-        {amount} {fromCurrencyTitle.toUpperCase()}&nbsp;=&nbsp;<Result>{convertedValue} {toCurrencyTitle.toUpperCase()}</Result>
-      </ResultBlock>
+      {showResult && (
+        <ResultBlock>
+          {amount} {fromCurrencyTitle.toUpperCase()}&nbsp;=&nbsp;
+          <Result>
+            {convertedValue} {toCurrencyTitle.toUpperCase()}
+          </Result>
+        </ResultBlock>
+      )}
       <PopularCurrenciesBlock>
-        {}
+        <p>1 USD = {popularCurrencies.UsdToEur} EUR</p>
+        <p>1 EUR = {popularCurrencies.EurToUsd} USD</p>
       </PopularCurrenciesBlock>
     </ConverterComponentWrapper>
   );
