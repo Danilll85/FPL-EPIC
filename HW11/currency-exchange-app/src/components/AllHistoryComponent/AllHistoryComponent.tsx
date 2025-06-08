@@ -1,27 +1,28 @@
-import { useContext, useEffect } from "react";
-import { AllHistoryWrapper } from "./styles";
+import { useContext } from "react";
 import { Context } from "../../context";
+import { AllHistoryWrapper, Arrow, Currency, CurrencyPair, HistoryItem, HistoryList, Title } from "./styles";
 
 export const AllHistoryComponent = () => {
-  const data = useContext(Context);
+  const { state } = useContext(Context);
 
   return (
     <AllHistoryWrapper>
-      All History <br />
-      {data.state.map((elem) => {
-        return (
-          <div>
-            <span>
-              {elem.fromCurrency.amount} {elem.fromCurrency.title}
-            </span>{" "}
-            <span>-</span>{" "}
-            <span>
-              {elem.toCurrency.amount} {elem.toCurrency.title}
-            </span>
-            <br />
-          </div>
-        );
-      })}
+      <Title>Conversion History</Title>
+      <HistoryList>
+        {state.map((elem, index) => (
+          <HistoryItem key={index}>
+            <CurrencyPair>
+              <Currency>
+                {elem.fromCurrency.amount.toFixed(2)} {elem.fromCurrency.title}
+              </Currency>
+              <Arrow>→</Arrow>
+              <Currency>
+                {elem.toCurrency.amount.toFixed(2)} {elem.toCurrency.title}
+              </Currency>
+            </CurrencyPair>
+          </HistoryItem>
+        ))}
+      </HistoryList>
     </AllHistoryWrapper>
   );
 };
