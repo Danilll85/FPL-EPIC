@@ -16,9 +16,10 @@ import {
   Result,
   PopularCurrenciesBlock,
 } from "./styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { PopularCurrencies } from "../../interfaces/PopularCurrencies";
 import type { ApiResponse } from "../../types/generics/ApiResponse";
+import { Context } from "../../context";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
 const UsdURL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
@@ -31,7 +32,9 @@ export const ConverterComponent = () => {
   const [toCurrencyTitle, setToCurrencyTitle] = useState("EUR");
   const [popularCurrencies, setPopularCurrencies] = useState<PopularCurrencies>({ UsdToEur: 0, EurToUsd: 0 });
   const [showResult, setShowResult] = useState(false);
-
+  const data = useContext(Context);
+  console.log(data);
+  
   useEffect(() => {
     fetch(URL)
       .then((res) => {
@@ -180,7 +183,14 @@ export const ConverterComponent = () => {
             ))}
           </Select>
         </FormControl>
-        <Button variant="contained" sx={{ backgroundColor: "#009788", paddingInline: "2rem" }} onClick={() => {convert(); setShowResult(true)}}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "#009788", paddingInline: "2rem" }}
+          onClick={() => {
+            convert();
+            setShowResult(true);
+          }}
+        >
           Convert
         </Button>
       </ConvertBlock>
