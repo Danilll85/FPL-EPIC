@@ -34,7 +34,7 @@ export const ConverterComponent = () => {
   const [showResult, setShowResult] = useState(false);
   const data = useContext(Context);
   console.log(data);
-  
+
   useEffect(() => {
     fetch(URL)
       .then((res) => {
@@ -109,6 +109,16 @@ export const ConverterComponent = () => {
         const result = +amount * data[fromCurrencyTitle][toCurrencyTitle];
         setConvertedValue(result);
       });
+  };
+
+  const updateState = () => {
+    const newState = {
+      fromCurrency: { amount: +amount, title: fromCurrencyTitle },
+      toCurrency: { amount: convertedValue, title: toCurrencyTitle },
+    };
+
+    data.setState((prev) => [...prev, newState]);
+    // data.setState([...data.state, newState]);
   };
 
   return (
@@ -188,6 +198,7 @@ export const ConverterComponent = () => {
           sx={{ backgroundColor: "#009788", paddingInline: "2rem" }}
           onClick={() => {
             convert();
+            updateState();
             setShowResult(true);
           }}
         >
