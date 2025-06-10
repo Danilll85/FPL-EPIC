@@ -20,6 +20,8 @@ import { useContext, useEffect, useState } from "react";
 import type { PopularCurrencies } from "../../interfaces/PopularCurrencies";
 import type { ApiResponse } from "../../types/generics/ApiResponse";
 import { Context } from "../../context";
+import { useFetch } from "../../hooks/useFetch";
+import { ErrorOutline } from "@mui/icons-material";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
 const UsdURL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
@@ -32,32 +34,21 @@ export const ConverterComponent = () => {
   const [toCurrencyTitle, setToCurrencyTitle] = useState("EUR");
   const [popularCurrencies, setPopularCurrencies] = useState<PopularCurrencies>({ UsdToEur: 0, EurToUsd: 0 });
   const [showResult, setShowResult] = useState(false);
-  const data = useContext(Context);
-  console.log(data);
+  const dataFromContext = useContext(Context);
+  const { data, isLoading, error } = useFetch(URL);
+  const { data: UsdData, isLoading: UsdLoading, error: UsdError } = useFetch(UsdURL);
 
   useEffect(() => {
-    fetch(URL)
-      .then((res) => {
-        const result = res.json();
-        return result;
-      })
-      .catch((err) => {
-        console.log(`fetching error ${err}`);
-      })
-      .then((data: ApiResponse) => {
-        setCurrencies(data);
-        console.log(data);
-      });
+    console.log(data, isLoading, error);
+    console.log(typeof data);
+    if (data) {
+      setCurrencies(data);
+    }
 
-    fetch(UsdURL)
-      .then((res) => {
-        const result = res.json();
-        return result;
-      })
-      .then((data) => {
-        setPopularCurrencies({ UsdToEur: data["usd"]["eur"], EurToUsd: 1 / data["usd"]["eur"] });
-      });
-  }, []);
+    if (UsdData) {
+      setPopularCurrencies({ UsdToEur: UsdData["usd"]["eur"], EurToUsd: 1 / UsdData["usd"]["eur"] });
+    }
+  }, [data, UsdData]);
 
   useEffect(() => {
     if (fromCurrencyTitle && toCurrencyTitle && amount !== "0") {
@@ -117,7 +108,7 @@ export const ConverterComponent = () => {
       toCurrency: { amount: convertedValue, title: toCurrencyTitle },
     };
 
-    data.setState((prev) => [...prev, newState]);
+    dataFromContext.setState((prev) => [...prev, newState]);
     // data.setState([...data.state, newState]);
   };
 
