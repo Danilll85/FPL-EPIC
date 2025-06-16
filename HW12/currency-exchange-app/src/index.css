@@ -1,0 +1,15 @@
+:root {
+  --background-color: #f2f2f2;
+  --primary-spacing: 2rem;
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+}
+
+body {
+  background-color: var(--background-color);
+}
