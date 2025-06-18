@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { NavLink } from "react-router-dom";
 
 export const AllHistoryWrapper = styled.div`
   display: flex;
@@ -57,3 +58,7 @@ export const Arrow = styled.span`
   color: #7f8c8d;
   font-weight: bold;
 `;
+
+export const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+`

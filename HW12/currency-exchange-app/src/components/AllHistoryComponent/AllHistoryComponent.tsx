@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Context } from "../../context";
-import { AllHistoryWrapper, Arrow, Currency, CurrencyPair, HistoryItem, HistoryList, Title } from "./styles";
+import { AllHistoryWrapper, Arrow, Currency, CurrencyPair, HistoryItem, HistoryList, StyledNavLink, Title } from "./styles";
 
 export const AllHistoryComponent = () => {
   const { state } = useContext(Context);
@@ -9,15 +9,15 @@ export const AllHistoryComponent = () => {
     <AllHistoryWrapper>
       <Title>Conversion History</Title>
       <HistoryList>
-        {state.map((elem, index) => (
-          <HistoryItem key={index}>
+        {state.map((elem) => (
+          <HistoryItem key={elem.id}>
             <CurrencyPair>
               <Currency>
-                {elem.fromCurrency.amount.toFixed(2)} {elem.fromCurrency.title}
+                {elem.fromCurrency.amount.toFixed(2)} <StyledNavLink to="/currency-info">{elem.fromCurrency.title.toUpperCase()}</StyledNavLink>
               </Currency>
               <Arrow>→</Arrow>
               <Currency>
-                {elem.toCurrency.amount.toFixed(2)} {elem.toCurrency.title}
+                {elem.toCurrency.amount.toFixed(2)} <StyledNavLink to="/currency-info">{elem.toCurrency.title.toUpperCase()}</StyledNavLink>
               </Currency>
             </CurrencyPair>
           </HistoryItem>

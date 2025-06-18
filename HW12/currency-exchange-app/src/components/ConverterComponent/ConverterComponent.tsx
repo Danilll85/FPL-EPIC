@@ -16,12 +16,13 @@ import {
   Result,
   PopularCurrenciesBlock,
 } from "./styles";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useId } from "react";
 import type { PopularCurrencies } from "../../interfaces/PopularCurrencies";
 import type { ApiResponse } from "../../types/generics/ApiResponse";
 import { Context } from "../../context";
 import { useFetch } from "../../hooks/useFetch";
 import { ErrorOutline } from "@mui/icons-material";
+import { v4 as uuidv4 } from "uuid";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";
 const UsdURL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json";
@@ -37,6 +38,7 @@ export const ConverterComponent = () => {
   const dataFromContext = useContext(Context);
   const { data, isLoading, error } = useFetch(URL);
   const { data: UsdData, isLoading: UsdLoading, error: UsdError } = useFetch(UsdURL);
+  const generateId = () => uuidv4();
 
   useEffect(() => {
     console.log(data, isLoading, error);
@@ -104,12 +106,12 @@ export const ConverterComponent = () => {
 
   const updateState = () => {
     const newState = {
+      id: generateId(),
       fromCurrency: { amount: +amount, title: fromCurrencyTitle },
       toCurrency: { amount: convertedValue, title: toCurrencyTitle },
     };
 
     dataFromContext.setState((prev) => [...prev, newState]);
-    // data.setState([...data.state, newState]);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { createContext, type Dispatch, type SetStateAction } from "react";
+import { createContext, useId, type Dispatch, type SetStateAction } from "react";
 
 type Currency = {
   amount: number;
@@ -6,6 +6,7 @@ type Currency = {
 };
 
 type ContextState = {
+  id: string,
   fromCurrency: Currency;
   toCurrency: Currency;
 };
@@ -17,6 +18,7 @@ type ContextType = {
 
 export const defaultState: ContextState[] = [
   {
+    id: 'f1',
     fromCurrency: { amount: 1, title: "USD" },
     toCurrency: { amount: 0.87, title: "EUR" },
   },

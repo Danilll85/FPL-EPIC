@@ -3,6 +3,7 @@ import { HomePage } from "./containers/HomePage";
 import { HistoryPage } from "./containers/HistoryPage";
 import { AboutPage } from "./containers/AboutPage";
 import { NotFoundPage } from "./containers/NotFoundPage";
+import { CurrencyInfoPage } from "./containers/CurrencyInfoPage";
 
 export const routes = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const routes = createBrowserRouter([
     {
         path: "/about",
         element: <AboutPage />,
+    },
+    {
+        path: "/currency-info",
+        element: <CurrencyInfoPage />
     },
     {
         path: "/*",
