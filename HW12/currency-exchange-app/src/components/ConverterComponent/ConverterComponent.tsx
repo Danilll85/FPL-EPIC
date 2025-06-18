@@ -16,12 +16,10 @@ import {
   Result,
   PopularCurrenciesBlock,
 } from "./styles";
-import { useContext, useEffect, useState, useId } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { PopularCurrencies } from "../../interfaces/PopularCurrencies";
-import type { ApiResponse } from "../../types/generics/ApiResponse";
 import { Context } from "../../context";
 import { useFetch } from "../../hooks/useFetch";
-import { ErrorOutline } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 
 const URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";

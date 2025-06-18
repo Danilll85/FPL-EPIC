@@ -1,24 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-type Task = string | undefined;
+export type Note = { id: string; title: string; note: string };
 
-type InitialDataState = {
-  tasks: Task[];
+export type InitialDataState = {
+  notes: Note[];
 };
 
-const initialState = {
-  tasks: [],
+export const initialState: InitialDataState = {
+  notes: [],
 };
 
 const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    addTodo: (state: InitialDataState, action) => {
-      state.tasks.push(action.payload);
+    addNote: (state: InitialDataState, action: PayloadAction<Note>) => {
+      state.notes.push(action.payload);
     },
   },
 });
 
-export const {addTodo} = dataSlice.actions;
+export const { addNote } = dataSlice.actions;
 export default dataSlice.reducer;
