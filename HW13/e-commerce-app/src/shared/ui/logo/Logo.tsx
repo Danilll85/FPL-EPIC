@@ -1,8 +1,13 @@
 import { LogoImg, LogoWrapper, Title } from "./styles";
 import logoImage from "../../../assets/icon_hw13.svg";
 import { useNavigate } from "react-router-dom";
+import type { Theme } from "../../../app/providers/context";
 
-export const Logo = () => {
+interface Props {
+  theme: Theme;
+}
+
+export const Logo = ({ theme }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -12,7 +17,7 @@ export const Logo = () => {
   return (
     <LogoWrapper onClick={handleClick}>
       <LogoImg src={logoImage}></LogoImg>
-      <Title>Commerce</Title>
+      <Title $theme={theme}>Commerce</Title>
     </LogoWrapper>
   );
 };

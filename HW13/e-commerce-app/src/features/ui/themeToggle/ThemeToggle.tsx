@@ -1,11 +1,15 @@
-import { ThemeToggleWrapper } from "./styles"
-import darkBulb from "../../../assets/Bulb_Dark.svg";
-import lightBulb from "../../../assets/Bulb_Light.svg";
+import { ThemeToggleWrapper } from "./styles";
+import type { Theme } from "../../../app/providers/context";
 
-export const ThemeToggle = () => {
-    return (
-        <ThemeToggleWrapper>
-            THEME
-        </ThemeToggleWrapper>
-    )
+interface Props {
+  theme: Theme;
+  themeToggle: () => void;
 }
+
+export const ThemeToggle = ({ theme, themeToggle }: Props) => {
+  const handleClick = () => {
+    themeToggle();
+  };
+
+  return <ThemeToggleWrapper onClick={handleClick} $theme={theme}> Change Theme </ThemeToggleWrapper>;
+};

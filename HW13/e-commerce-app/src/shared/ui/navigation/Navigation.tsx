@@ -1,7 +1,12 @@
+import type { Theme } from "../../../app/providers/context";
 import { NavElement, NavigationWrapper } from "./styles";
 import { useNavigate } from "react-router-dom";
 
-export const Navigation = () => {
+interface Props {
+  theme: Theme;
+}
+
+export const Navigation = ({ theme }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -24,9 +29,9 @@ export const Navigation = () => {
 
   return (
     <NavigationWrapper>
-      <NavElement onClick={handleClick}>products</NavElement>
-      <NavElement onClick={handleClick}>cart</NavElement>
-      <NavElement onClick={handleClick}>profile</NavElement>
+      <NavElement onClick={handleClick} $theme={theme}>products</NavElement>
+      <NavElement onClick={handleClick} $theme={theme}>cart</NavElement>
+      <NavElement onClick={handleClick} $theme={theme}>profile</NavElement>
     </NavigationWrapper>
   );
 };

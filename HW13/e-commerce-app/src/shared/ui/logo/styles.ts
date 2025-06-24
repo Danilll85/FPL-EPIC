@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import type { Theme } from "../../../app/providers/context";
 
 const LogoWrapper = styled.div`
   display: flex;
@@ -11,8 +12,9 @@ const LogoImg = styled.img`
   height: 5rem;
 `;
 
-const Title = styled.div`
+const Title = styled.div<{ $theme: Theme }>`  
+  color: ${({ $theme }) => ($theme === "light" ? "black" : "white")};
   font-size: 4rem;
-`
+`;
 
 export { LogoWrapper, LogoImg, Title };

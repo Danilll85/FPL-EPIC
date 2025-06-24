@@ -1,4 +1,4 @@
-import { useReducer, type PropsWithChildren } from "react";
+import { useEffect, useReducer, type PropsWithChildren } from "react";
 import { Context, defaultState } from ".";
 import { reducer } from "./reducer";
 
