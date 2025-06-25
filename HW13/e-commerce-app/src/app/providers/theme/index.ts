@@ -7,9 +7,17 @@ export type State = {
   theme: Theme;
 };
 
-export const defaultState: State = {
-  theme: "light",
+const loadTheme = (): State => {
+  const savedTheme = localStorage.getItem("theme");
+  if (!savedTheme) {
+    localStorage.setItem("theme", "light");
+    return { theme: "light" };
+  } else {
+    return { theme: localStorage.getItem("theme") as Theme };
+  }
 };
+
+export const defaultState: State = loadTheme();
 
 export type ContextType = {
   state: State;
