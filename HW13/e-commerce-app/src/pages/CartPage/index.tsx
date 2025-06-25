@@ -1,6 +1,6 @@
 import { useTheme } from "../../shared/lib/hooks/useTheme";
 import { Navbar } from "../../widgets/Navbar";
-import { CartContent } from "./ui/CartContent";
+import { CartContent } from "./ui/CartContent/index";
 
 export const CartPage = () => {
   const { theme, dispatch } = useTheme();
@@ -8,7 +8,7 @@ export const CartPage = () => {
   return (
     <>
       <Navbar theme={theme} themeToggle={dispatch} />
-      <CartContent theme={theme}/>
+      <CartContent theme={theme} />
     </>
   );
 };

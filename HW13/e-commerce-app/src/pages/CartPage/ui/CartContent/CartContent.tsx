@@ -1,5 +1,5 @@
 import type { Theme } from "../../../../app/providers/theme";
-import { useCart } from "../../../../entities/CardItem/lib/hooks/useCart";
+import { useCart } from "../../../../shared/lib/hooks/useCart";
 import { CartItem } from "../CartItem";
 import { CartContentWrapper } from "./styles";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const CartContent = ({ theme }: Props) => {
-  const { state, dispatch } = useCart();
+  const { state } = useCart();
 
   if (state.cart.length === 0)
     return (
@@ -28,7 +28,7 @@ export const CartContent = ({ theme }: Props) => {
   return (
     <CartContentWrapper>
       {state.cart.map((elem) => {
-        return <CartItem key={elem.id} title={elem.title} price={elem.price} quantity={elem.quantity} />;
+        return <CartItem key={elem.id} id={+elem.id} title={elem.title} price={elem.price} quantity={elem.quantity} />;
       })}
     </CartContentWrapper>
   );
