@@ -1,4 +1,4 @@
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 import { Header } from "./styles";
 
 interface Props {

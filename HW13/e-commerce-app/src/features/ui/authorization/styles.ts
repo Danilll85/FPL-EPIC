@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 
 const AuthWrapper = styled.div<{ $theme: Theme }>`
   display: flex;
@@ -7,4 +7,10 @@ const AuthWrapper = styled.div<{ $theme: Theme }>`
   color: ${({$theme}) => ($theme === "light" ? "black" : "white")};
 `;
 
-export { AuthWrapper };
+const AuthBtn = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+`
+
+export { AuthWrapper, AuthBtn };

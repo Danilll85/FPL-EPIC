@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 import { ProductsListWrapper } from "./styles";
 import { URL } from "../config/storeAPI";
-import { CardItem } from "../../../entities/CardItem";
+import { CardItem } from "../../../entities/CardItem/ui/index";
+import { useAuth } from "../../../shared/lib/hooks/useAuth";
 
 interface Props {
   theme: Theme;
@@ -18,6 +19,7 @@ type Data = {
 
 export const ProductsList = ({ theme }: Props) => {
   const [data, setData] = useState<Data[] | null>(null);
+  const { state, dispatch } = useAuth();
 
   useEffect(() => {
     fetch(URL)
@@ -49,6 +51,8 @@ export const ProductsList = ({ theme }: Props) => {
               price={elem.price}
               quantity={elem.quantity}
               image={elem.image}
+              theme={theme}
+              isLogged={state.isAuth}
             />
           );
         })}

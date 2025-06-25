@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 
 const NavigationWrapper = styled.div`
   display: flex;

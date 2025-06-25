@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 import { colors } from "../../../shared/ui/styleColors";
 
 const ProductsListWrapper = styled.div<{ $theme: Theme }>`
-  margin-top: 5rem;
-  margin-inline: 5rem;
+  padding-top: 5rem;
+  padding-inline: 5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;

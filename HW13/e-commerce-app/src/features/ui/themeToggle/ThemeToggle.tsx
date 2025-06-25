@@ -1,5 +1,5 @@
 import { ThemeToggleWrapper } from "./styles";
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 
 interface Props {
   theme: Theme;

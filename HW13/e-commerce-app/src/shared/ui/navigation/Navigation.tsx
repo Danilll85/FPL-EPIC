@@ -1,12 +1,13 @@
-import type { Theme } from "../../../app/providers/context";
+import type { Theme } from "../../../app/providers/theme";
 import { NavElement, NavigationWrapper } from "./styles";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
   theme: Theme;
+  isLogged: boolean;
 }
 
-export const Navigation = ({ theme }: Props) => {
+export const Navigation = ({ theme, isLogged }: Props) => {
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -17,9 +18,17 @@ export const Navigation = ({ theme }: Props) => {
         navigate("/products");
         break;
       case "cart":
+        if (!isLogged) {
+          alert("login firstly");
+          return;
+        }
         navigate("/cart");
         break;
       case "profile":
+        if (!isLogged) {
+          alert("login firstly");
+          return;
+        }
         navigate("/profile");
         break;
       default:
