@@ -22,8 +22,11 @@ export const CartItem = ({ id, title, price, quantity }: Props) => {
         id: id,
       });
     } else if (value === "-") {
+      let type: "UPDATE_QUANTITY" | "REMOVE_ITEM" = "UPDATE_QUANTITY";
+      if (quantity == 1) type = "REMOVE_ITEM";
+
       dispatch({
-        type: "UPDATE_QUANTITY",
+        type: `${type}`,
         operation: "decrease",
         id: id,
       });
@@ -34,8 +37,8 @@ export const CartItem = ({ id, title, price, quantity }: Props) => {
     dispatch({
       type: "REMOVE_ITEM",
       id: id,
-    })
-  }
+    });
+  };
 
   return (
     <CartContentWrapper>

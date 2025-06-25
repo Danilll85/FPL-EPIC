@@ -7,4 +7,8 @@ const CartContentWrapper = styled.div`
   gap: 1rem;
 `;
 
-export { CartContentWrapper };
+const ShowPrice = styled.div`
+  padding-inline: 5rem;
+`
+
+export { CartContentWrapper, ShowPrice };
