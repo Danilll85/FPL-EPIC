@@ -1,16 +1,5 @@
 import { useEffect } from "react";
-import {
-  CardImg,
-  CardItemWrapper,
-  InfoBlock,
-  Title,
-  Price,
-  Quantity,
-  AddButton,
-  DiscountBadge,
-  Rating,
-  FavoriteButton,
-} from "./styles";
+import { CardImg, CardItemWrapper, InfoBlock, Title, Price, Quantity, AddButton } from "./styles";
 
 interface Props {
   id: string;
@@ -22,27 +11,21 @@ interface Props {
   rating?: number;
 }
 
-export const CardItem = ({ id, title, price, quantity, image, discount = 0, rating = 0 }: Props) => {
+export const CardItem = ({ id, title, price, quantity, image }: Props) => {
   useEffect(() => {
-    console.log(id, title, price, quantity, image);
+    console.log(`quantity is ${quantity}`);
+    console.log(`title is ${title}`);
   });
-
-  const finalPrice = discount ? price * (1 - discount / 100) : price;
 
   return (
     <CardItemWrapper>
-      {discount > 0 && <DiscountBadge>-{discount}%</DiscountBadge>}
-      <FavoriteButton>♥</FavoriteButton>
-
       <CardImg src={image} alt={title} />
 
       <InfoBlock>
-        <Rating value={rating} max={5} />
         <Title>{title}</Title>
 
         <div className="price-block">
-          {discount > 0 && <Price $old>{price.toFixed(2)} ₽</Price>}
-          <Price>{finalPrice.toFixed(2)} ₽</Price>
+          <Price>{price.toFixed(2)} $</Price>
         </div>
 
         <Quantity>{quantity > 0 ? `В наличии: ${quantity} шт.` : "Нет в наличии"}</Quantity>

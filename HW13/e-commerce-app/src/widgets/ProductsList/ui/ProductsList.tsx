@@ -35,16 +35,23 @@ export const ProductsList = ({ theme }: Props) => {
   return (
     <ProductsListWrapper $theme={theme}>
       {data &&
-        data.map((elem) => (
-          <CardItem
-            key={elem.id}
-            id={elem.id}
-            title={elem.title}
-            price={elem.price}
-            quantity={elem.quantity}
-            image={elem.image}
-          />
-        ))}
+        data.map((elem) => {
+          //all quantity values from fakeAPI is 0, so, in some parts will be hardcoded values
+          if (+elem.id % 2 == 0) {
+            elem.quantity = +elem.id + 1;
+          }
+
+          return (
+            <CardItem
+              key={elem.id}
+              id={elem.id}
+              title={elem.title}
+              price={elem.price}
+              quantity={elem.quantity}
+              image={elem.image}
+            />
+          );
+        })}
     </ProductsListWrapper>
   );
 };

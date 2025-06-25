@@ -69,55 +69,8 @@ export const AddButton = styled.button`
   cursor: pointer;
   transition: background-color 0.2s;
 
-  
-
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-  }
-`;
-
-export const DiscountBadge = styled.span`
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background-color: #ff4d4f;
-  color: white;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: bold;
-  z-index: 1;
-`;
-
-export const FavoriteButton = styled.button`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #ccc;
-  cursor: pointer;
-  z-index: 1;
-
-  &:hover {
-    color: #ff4d4f;
-  }
-`;
-
-export const Rating = styled.div<{ value: number; max: number }>`
-  --percent: calc(${({ value, max }) => value / max} * 100%);
-
-  display: inline-block;
-  font-size: 1rem;
-  line-height: 1rem;
-
-  &::before {
-    content: "★★★★★";
-    letter-spacing: 0.1rem;
-    background: linear-gradient(90deg, #ffb400 var(--percent), #ddd var(--percent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 `;
