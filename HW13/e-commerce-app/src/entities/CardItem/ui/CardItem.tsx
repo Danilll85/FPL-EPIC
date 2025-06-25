@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CardImg, CardItemWrapper, InfoBlock, Title, Price, Quantity, AddButton } from "./styles";
 import type { Theme } from "../../../app/providers/theme";
 import { useCart } from "../lib/hooks/useCart";
@@ -15,11 +15,8 @@ interface Props {
 
 export const CardItem = ({ id, title, price, quantity, image, theme, isLogged }: Props) => {
   const { state, dispatch } = useCart();
+  const [currentQuantity, setCurrentQuantity] = useState(quantity);
 
-  useEffect(() => {
-    console.log(state);
-    console.log(dispatch);
-  });
 
   const addItemToCart = () => {
     if (!isLogged) {
@@ -36,6 +33,9 @@ export const CardItem = ({ id, title, price, quantity, image, theme, isLogged }:
         quantity: quantity,
       },
     });
+
+    setCurrentQuantity((prev) => prev - 1);
+    alert("successful! item was added to the cart.");
   };
 
   return (
@@ -46,9 +46,9 @@ export const CardItem = ({ id, title, price, quantity, image, theme, isLogged }:
         <div className="price-block">
           <Price>{price.toFixed(2)} $</Price>
         </div>
-        <Quantity>{quantity > 0 ? `Availible: ${quantity} items` : "Not availible"}</Quantity>
+        <Quantity>{currentQuantity > 0 ? `Availible: ${currentQuantity} items` : "Not availible"}</Quantity>
         <AddButton onClick={addItemToCart} disabled={quantity === 0}>
-          {quantity > 0 ? "Add to cart" : "Not availible"}
+          {currentQuantity > 0 ? "Add to cart" : "Not availible"}
         </AddButton>
       </InfoBlock>
     </CardItemWrapper>

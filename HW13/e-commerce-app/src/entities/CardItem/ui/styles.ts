@@ -50,10 +50,9 @@ export const Title = styled.h3`
 `;
 
 export const Price = styled.span<{ $old?: boolean }>`
-  font-size: ${({ $old }) => ($old ? "0.8rem" : "1.2rem")};
-  font-weight: ${({ $old }) => ($old ? "400" : "700")};
-  color: ${({ $old }) => ($old ? "#999" : "#333")};
-  text-decoration: ${({ $old }) => ($old ? "line-through" : "none")};
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
 `;
 
 export const Quantity = styled.span`
@@ -64,7 +63,8 @@ export const AddButton = styled.button`
   padding: 0.8rem;
   border: none;
   border-radius: 0.8rem;
-  color: white;
+  background-color: orange;
+  color: black;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import type { Theme } from "../../../app/providers/theme";
-import { colors } from "../styleColors";
+import type { Theme } from "../../../../app/providers/theme";
+import { colors } from "../../../../shared/ui/styleColors";
 
 export const Header = styled.h1<{ $theme: Theme }>`
   height: 84.5vh;

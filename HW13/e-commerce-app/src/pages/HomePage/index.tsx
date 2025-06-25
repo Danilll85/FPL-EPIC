@@ -1,5 +1,5 @@
 import { Navbar } from "../../widgets/Navbar";
-import { Welcome } from "../../shared/ui/welcome";
+import { Welcome } from "./ui/welcome";
 import { useTheme } from "../../shared/lib/hooks/useTheme";
 
 export const HomePage = () => {
