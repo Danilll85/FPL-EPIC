@@ -1,16 +1,17 @@
-import { useState } from "react";
 import { CartContentWrapper } from "../CartContent/styles";
 import { InfoBlockWrapper, Price, Quantity, Title, UpdateBtn, UpdateQuantityBlock, RemoveBtn } from "./styles";
 import { useCart } from "../../../../shared/lib/hooks/useCart";
+import type { Theme } from "../../../../app/providers/theme";
 
 interface Props {
   id: number;
   title: string;
   price: number;
   quantity: number;
+  theme: Theme;
 }
 
-export const CartItem = ({ id, title, price, quantity }: Props) => {
+export const CartItem = ({ id, title, price, quantity, theme }: Props) => {
   const { state, dispatch } = useCart();
 
   const handleUpdateQuantityClick = (e: any) => {
@@ -41,9 +42,9 @@ export const CartItem = ({ id, title, price, quantity }: Props) => {
   };
 
   return (
-    <CartContentWrapper>
+    <CartContentWrapper $theme={theme}>
       <InfoBlockWrapper>
-        <Title>{title}</Title>
+        <Title $theme={theme}>{title}</Title>
         <Quantity>{quantity} items</Quantity>
         <Price>{(price * quantity).toFixed(2)}$</Price>
       </InfoBlockWrapper>

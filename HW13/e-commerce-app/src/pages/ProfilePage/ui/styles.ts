@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import type { Theme } from "../../../app/providers/theme";
+import { colors } from "../../../shared/ui/styleColors";
 
-export const ProfileWrapper = styled.div`
+export const ProfileWrapper = styled.div<{$theme: Theme}>`
+  height: 88vh;
+  background: ${({$theme}) => ($theme === "light" ? colors.backgroundBodyLight : colors.backgroundBodyDark)}}
   padding: 2rem;
   max-width: 600px;
   margin: 0 auto;

@@ -25,7 +25,7 @@ export const ProfileBlock = ({ theme }: Props) => {
   };
 
   return (
-    <ProfileWrapper>
+    <ProfileWrapper $theme={theme}>
       <Greeting $theme={theme}>Hello, {state.username || "Guest"}</Greeting>
 
       {!isEditing ? (

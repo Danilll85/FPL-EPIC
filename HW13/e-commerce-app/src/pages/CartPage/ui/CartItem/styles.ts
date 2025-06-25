@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import type { Theme } from "../../../../app/providers/theme";
 
 const CartItemWrapper = styled.div`
   outline: 1px solid black;
@@ -21,7 +22,8 @@ const UpdateQuantityBlock = styled.div`
   align-items: center;
 `;
 
-const Title = styled.span`
+const Title = styled.span<{ $theme: Theme }>`
+  color: ${({ $theme }) => ($theme === "light" ? "black" : "white")};
   font-weight: bold;
 `;
 
