@@ -3,6 +3,7 @@ import type { Action } from "./reducer";
 
 export type State = {
   isAuth: boolean;
+  username: string;
 };
 
 export type ContextType = {
@@ -12,6 +13,7 @@ export type ContextType = {
 
 export const defaultState: State = {
   isAuth: false,
+  username: '',
 };
 
 export const Context = createContext<ContextType>({

@@ -7,8 +7,9 @@ const AuthWrapper = styled.div<{ $theme: Theme }>`
   color: ${({$theme}) => ($theme === "light" ? "black" : "white")};
 `;
 
-const AuthBtn = styled.button`
+const AuthBtn = styled.button<{ $theme: Theme }>`
   border: none;
+  color: ${({$theme}) => ($theme === "light" ? "black" : "white")};
   background: none;
   cursor: pointer;
 `

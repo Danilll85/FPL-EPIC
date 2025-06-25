@@ -24,7 +24,7 @@ export const Authorization = ({ theme, isLogged, toggleLogged }: Props) => {
 
   return (
     <AuthWrapper $theme={theme}>
-      <AuthBtn onClick={handleClick}>
+      <AuthBtn onClick={handleClick} $theme={theme}>
         {isLogIn && "LogOut"}
         {!isLogIn && "LogIn"}
       </AuthBtn>
