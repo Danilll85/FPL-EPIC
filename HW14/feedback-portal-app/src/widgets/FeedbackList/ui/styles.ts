@@ -1,0 +1,104 @@
+import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+
+const commonBorder = css`
+  border: 1px solid #e0e0e0;
+`;
+
+const FeedbackListWrapper = styled.div`
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const Header = styled.h1`
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-weight: 600;
+`;
+
+const FeedbackTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+`;
+
+const TableHeaderBlock = styled.thead`
+  background-color: #f5f7fa;
+`;
+
+const TableHeader = styled.th`
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #4a5568;
+  ${commonBorder};
+`;
+
+const TableBody = styled.tbody`
+  tr:nth-of-type(even) {
+    background-color: #f9fafb;
+  }
+
+  tr:hover {
+    background-color: #f0f4f8;
+  }
+`;
+
+const TableRow = styled.tr`
+  transition: background-color 0.2s ease;
+`;
+
+const TableCell = styled.td`
+  padding: 1rem;
+  ${commonBorder};
+  color: #4a5568;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  gap: 0.75rem;
+`;
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+
+  &:first-of-type {
+    background-color: #4299e1;
+    color: white;
+
+    &:hover {
+      background-color: #3182ce;
+    }
+  }
+
+  &:last-of-type {
+    background-color: #f56565;
+    color: white;
+
+    &:hover {
+      background-color: #e53e3e;
+    }
+  }
+`;
+
+export {
+  FeedbackListWrapper,
+  Header,
+  FeedbackTable,
+  TableHeaderBlock,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+  ButtonsWrapper,
+  Button,
+};

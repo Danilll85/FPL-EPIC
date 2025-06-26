@@ -6,6 +6,7 @@ export const SubmitFeedback = () => {
     <SubmitFeedbackWrapper>
       <Header>Submit Feedback</Header>
       <SubmitForm />
+      <hr />
     </SubmitFeedbackWrapper>
   );
 };

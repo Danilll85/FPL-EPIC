@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataSliceReducer, {initialState } from "../modules/data/data.slice";
+import dataSliceReducer, { initialState } from "../modules/data/data.slice";
 import { loadStateFromLocaleStorage } from "./loadState";
 
 export interface RootState {
