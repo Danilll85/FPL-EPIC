@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../app/providers/store/store";
+import { addFeedback } from "../../../app/providers/store/slices/feedback.slice";
 
 type DataType = {
   message: string;
@@ -38,9 +41,13 @@ export const SubmitForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<DataType>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit = async (data: any) => {
     console.log(data);
+    if (data) {
+      dispatch(addFeedback(data));
+    }
   };
 
   return (
