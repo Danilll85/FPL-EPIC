@@ -6,9 +6,8 @@ const commonBorder = css`
 `;
 
 const FeedbackListWrapper = styled.div`
-  padding: 2rem;
+  padding-left: 4rem;
   max-width: 1200px;
-  margin: 0 auto;
 `;
 
 const Header = styled.h1`
