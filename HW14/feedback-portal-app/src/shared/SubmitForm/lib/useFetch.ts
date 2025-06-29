@@ -14,8 +14,6 @@ export const useFetch = () => {
       .then((data) => {
         setIsLoading(false);
         setData(data);
-        console.log(data);
-        
       })
       .catch((e) => {
         setError(e);

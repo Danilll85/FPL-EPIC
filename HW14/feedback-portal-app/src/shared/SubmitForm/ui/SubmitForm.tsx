@@ -37,7 +37,6 @@ const commonBtnStyle = {
   cursor: "pointer",
 };
 
-
 export const SubmitForm = () => {
   const {
     register,
@@ -48,8 +47,8 @@ export const SubmitForm = () => {
   const { data } = useFetch();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     if (data) {
+      data.createdAt = new Date().toISOString().split("T")[0];
       dispatch(addFeedback(data));
     }
   };
@@ -89,12 +88,14 @@ export const SubmitForm = () => {
             style={{ ...commonInputStyle, background: "white" }}
           >
             <option value="">Select department</option>
-            {data && data.map((elem) => {
-              return <option key={elem.id} value={elem.title}>{elem.title}</option>;
-            })}
-            {/* <option value="HR">HR</option>
-            <option value="IT">IT</option>
-            <option value="Product">Product</option> */}
+            {data &&
+              data.map((elem) => {
+                return (
+                  <option key={elem.id} value={elem.title}>
+                    {elem.title}
+                  </option>
+                );
+              })}
           </select>
         </div>
         <button style={commonBtnStyle}>Submit Feedback</button>

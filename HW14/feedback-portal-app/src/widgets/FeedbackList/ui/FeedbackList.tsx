@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   ButtonsWrapper,
@@ -10,8 +11,12 @@ import {
   TableHeaderBlock,
   TableRow,
 } from "./styles";
+import type { AppDispatch, RootState } from "../../../app/providers/store/store";
 
 export const FeedbackList = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const feedbacks = useSelector((state: RootState) => state.feedback.feedbacks);
+
   return (
     <FeedbackListWrapper>
       <Header>Feedback List</Header>
@@ -25,39 +30,20 @@ export const FeedbackList = () => {
           </TableRow>
         </TableHeaderBlock>
         <TableBody>
-          <TableRow>
-            <TableCell>Great work by the HR team!</TableCell>
-            <TableCell>HR</TableCell>
-            <TableCell>2024-04-17</TableCell>
-            <TableCell>
-              <ButtonsWrapper>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </ButtonsWrapper>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Website needs some imporovements</TableCell>
-            <TableCell>IT</TableCell>
-            <TableCell>2024-04-16</TableCell>
-            <TableCell>
-              <ButtonsWrapper>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </ButtonsWrapper>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Appreciate the new features</TableCell>
-            <TableCell>Product</TableCell>
-            <TableCell>2024-04-15</TableCell>
-            <TableCell>
-              <ButtonsWrapper>
-                <Button>Edit</Button>
-                <Button>Delete</Button>
-              </ButtonsWrapper>
-            </TableCell>
-          </TableRow>
+          {feedbacks &&
+            feedbacks.map((elem) => {
+              return (
+                <TableRow key={elem.id}>
+                  <TableCell>{elem.message}</TableCell>
+                  <TableCell>{elem.department}</TableCell>
+                  <TableCell>{elem.createdAt}</TableCell>
+                  <ButtonsWrapper>
+                    <Button>Edit</Button>
+                    <Button>Delete</Button>
+                  </ButtonsWrapper>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </FeedbackTable>
     </FeedbackListWrapper>
