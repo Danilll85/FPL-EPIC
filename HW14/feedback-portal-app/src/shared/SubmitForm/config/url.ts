@@ -1,1 +1,1 @@
-export const URL = 'https://jsonplaceholder.typicode.com/posts?_limit=5';
+export const URL = 'https://6861115a8e7486408444d00c.mockapi.io/api/departments/departments';

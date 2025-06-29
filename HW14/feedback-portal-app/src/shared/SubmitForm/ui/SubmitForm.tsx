@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../app/providers/store/store";
 import { addFeedback } from "../../../app/providers/store/slices/feedback.slice";
+import { useFetch } from "../lib/useFetch";
+import { useEffect } from "react";
 
 type DataType = {
   message: string;
@@ -27,13 +29,14 @@ const commonInputStyle = {
 
 const commonBtnStyle = {
   background: "none",
-  border: '1px solid black',
-  borderRadius: '10px',
-  paddingInline: '2rem',
-  paddingBlock: '1rem',
-  fontSize: '0.8rem',
-  cursor: 'pointer',
+  border: "1px solid black",
+  borderRadius: "10px",
+  paddingInline: "2rem",
+  paddingBlock: "1rem",
+  fontSize: "0.8rem",
+  cursor: "pointer",
 };
+
 
 export const SubmitForm = () => {
   const {
@@ -42,6 +45,7 @@ export const SubmitForm = () => {
     formState: { errors },
   } = useForm<DataType>();
   const dispatch = useDispatch<AppDispatch>();
+  const { data } = useFetch();
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -49,6 +53,10 @@ export const SubmitForm = () => {
       dispatch(addFeedback(data));
     }
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -70,7 +78,7 @@ export const SubmitForm = () => {
             }`}
         </style>
       </div>
-      <div style={{ display: "flex", alignItems: 'end', gap: "1rem" }}>
+      <div style={{ display: "flex", alignItems: "end", gap: "1rem" }}>
         <div style={commonFormStyle}>
           <label htmlFor="department" style={commonLabelStyle}>
             Department
@@ -81,9 +89,12 @@ export const SubmitForm = () => {
             style={{ ...commonInputStyle, background: "white" }}
           >
             <option value="">Select department</option>
-            <option value="HR">HR</option>
+            {data && data.map((elem) => {
+              return <option key={elem.id} value={elem.title}>{elem.title}</option>;
+            })}
+            {/* <option value="HR">HR</option>
             <option value="IT">IT</option>
-            <option value="Product">Product</option>
+            <option value="Product">Product</option> */}
           </select>
         </div>
         <button style={commonBtnStyle}>Submit Feedback</button>
