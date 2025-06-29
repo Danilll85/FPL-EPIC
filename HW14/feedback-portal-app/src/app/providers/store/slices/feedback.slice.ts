@@ -23,8 +23,23 @@ const feedbackSlice = createSlice({
     addFeedback: (state: InitialFeedbackState, action: PayloadAction<Feedback>) => {
       state.feedbacks.push(action.payload);
     },
+    editFeedback: (state: InitialFeedbackState, action: PayloadAction<{ id: string; changes: Partial<Feedback> }>) => {
+      const index = state.feedbacks.findIndex((f) => f.id === action.payload.id);
+      if (index !== -1) {
+        state.feedbacks[index] = {
+          ...state.feedbacks[index],
+          ...action.payload.changes,
+          updatedAt: new Date().toISOString(),
+        };
+      }
+    },
+    deleteFeedback: (state: InitialFeedbackState, action: PayloadAction<string>) => {
+      state.feedbacks = state.feedbacks.filter((f) => f.id !== action.payload);
+    },
   },
 });
 
 export const { addFeedback } = feedbackSlice.actions;
+export const { editFeedback } = feedbackSlice.actions;
+export const { deleteFeedback } = feedbackSlice.actions;
 export default feedbackSlice.reducer;

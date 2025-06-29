@@ -60,6 +60,8 @@ const TableCell = styled.td`
 const ButtonsWrapper = styled.div`
   display: flex;
   gap: 0.75rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
 `;
 
 const Button = styled.button`
@@ -89,6 +91,28 @@ const Button = styled.button`
   }
 `;
 
+const EditInput = styled.input`
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 1rem;
+`;
+
+const SaveButton = styled(Button)`
+  background-color: #48bb78 !important; /* Зеленый */
+  &:hover {
+    background-color: #38a169 !important;
+  }
+`;
+
+const CancelButton = styled(Button)`
+  background-color: #a0aec0 !important; /* Серый */
+  &:hover {
+    background-color: #718096 !important;
+  }
+`;
+
 export {
   FeedbackListWrapper,
   Header,
@@ -100,4 +124,7 @@ export {
   TableBody,
   ButtonsWrapper,
   Button,
+  EditInput,
+  SaveButton,
+  CancelButton,
 };
