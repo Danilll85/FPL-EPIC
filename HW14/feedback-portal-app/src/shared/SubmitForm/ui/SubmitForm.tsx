@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../../../app/providers/store/store";
-import { addFeedback } from "../../../app/providers/store/slices/feedback.slice";
-import { useFetch } from "../lib/useFetch";
+import { addFeedback, type Feedback } from "../../../app/providers/store/slices/feedback.slice";
 import { useEffect } from "react";
+import {
+  fetchDepartments,
+  selectDepartments,
+  selectDepartmentsLoading,
+} from "../../../app/providers/store/slices/departments.slice";
+import { v4 as uuidv4 } from "uuid";
 
 type DataType = {
   message: string;
@@ -44,18 +49,23 @@ export const SubmitForm = () => {
     formState: { errors },
   } = useForm<DataType>();
   const dispatch = useDispatch<AppDispatch>();
-  const { data } = useFetch();
-
-  const onSubmit = async (data: any) => {
-    if (data) {
-      data.createdAt = new Date().toISOString().split("T")[0];
-      dispatch(addFeedback(data));
-    }
-  };
+  const departments = useSelector(selectDepartments);
+  const loading = useSelector(selectDepartmentsLoading);
 
   useEffect(() => {
-    console.log(data);
-  }, []);
+    dispatch(fetchDepartments());
+  }, [dispatch]);
+
+  const onSubmit = async (data: DataType) => {
+    const feedbackData: Feedback = {
+      id: uuidv4(),
+      message: data.message,
+      department: data.department,
+      createdAt: new Date().toISOString().split("T")[0],
+      updatedAt: new Date().toISOString().split("T")[0],
+    };
+    dispatch(addFeedback(feedbackData));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -86,16 +96,14 @@ export const SubmitForm = () => {
             id="department"
             {...register("department", { required: true })}
             style={{ ...commonInputStyle, background: "white" }}
+            disabled={loading}
           >
             <option value="">Select department</option>
-            {data &&
-              data.map((elem) => {
-                return (
-                  <option key={elem.id} value={elem.title}>
-                    {elem.title}
-                  </option>
-                );
-              })}
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.title}>
+                {dept.title}
+              </option>
+            ))}
           </select>
         </div>
         <button style={commonBtnStyle}>Submit Feedback</button>

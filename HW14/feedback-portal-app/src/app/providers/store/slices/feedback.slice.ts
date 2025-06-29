@@ -5,7 +5,7 @@ export type Feedback = {
   message: string;
   department: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 };
 
 export type InitialFeedbackState = {
