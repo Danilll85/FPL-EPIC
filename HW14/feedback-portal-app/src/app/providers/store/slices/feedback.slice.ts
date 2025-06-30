@@ -16,9 +16,10 @@ export const initialState: InitialFeedbackState = {
   feedbacks: [],
 };
 
+
 const feedbackSlice = createSlice({
   name: "feedback",
-  initialState,
+  initialState: initialState,
   reducers: {
     addFeedback: (state: InitialFeedbackState, action: PayloadAction<Feedback>) => {
       state.feedbacks.push(action.payload);

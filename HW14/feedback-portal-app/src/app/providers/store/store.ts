@@ -4,14 +4,22 @@ import authSliceReducer from "./slices/auth.slice";
 import departmentReducer from "./slices/departments.slice";
 import { authMiddleware } from "./middleware/authMiddlware";
 import { logger } from "./middleware/logger";
+import { feedbackMiddleware } from "./middleware/feedbackMiddleware";
+import { loadFeedbackFromStorage } from "./utils/localeStorage";
+
+const preloadedState = {
+  feedback: loadFeedbackFromStorage(),
+};
 
 export const store = configureStore({
   reducer: {
     feedback: feedbackSliceReducer,
     auth: authSliceReducer,
-    departments: departmentReducer
+    departments: departmentReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(authMiddleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger).concat(authMiddleware).concat(feedbackMiddleware),
+  preloadedState,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

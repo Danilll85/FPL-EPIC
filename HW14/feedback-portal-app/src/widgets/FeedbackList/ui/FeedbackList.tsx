@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -23,6 +23,12 @@ export const FeedbackList = () => {
   const feedbacks = useSelector((state: RootState) => state.feedback.feedbacks);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedMessage, setEditedMessage] = useState("");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("feedback_data");
+    console.log("Stored in localStorage:", stored);
+    console.log("Redux state:", feedbacks);
+  }, [feedbacks]);
 
   const handleEditClick = (id: string, currentMessage: string) => {
     setEditingId(id);

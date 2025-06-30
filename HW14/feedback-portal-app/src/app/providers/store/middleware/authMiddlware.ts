@@ -1,5 +1,4 @@
 import type { Middleware } from "@reduxjs/toolkit";
-import type { AppDispatch, RootState } from "../store";
 
 export const authMiddleware: Middleware = (store) => (next) => (action) => {
   const isAuth = store.getState().auth.isAuth;
