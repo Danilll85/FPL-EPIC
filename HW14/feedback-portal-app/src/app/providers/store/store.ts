@@ -6,6 +6,7 @@ import { authMiddleware } from "./middleware/authMiddlware";
 import { logger } from "./middleware/logger";
 import { feedbackMiddleware } from "./middleware/feedbackMiddleware";
 import { loadFeedbackFromStorage } from "./utils/localeStorage";
+import { apiLoggingMiddleware } from "./middleware/apiLoggingMiddleware";
 
 const preloadedState = {
   feedback: loadFeedbackFromStorage(),
@@ -18,7 +19,7 @@ export const store = configureStore({
     departments: departmentReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(logger).concat(authMiddleware).concat(feedbackMiddleware),
+    getDefaultMiddleware().concat(logger).concat(authMiddleware).concat(feedbackMiddleware).concat(apiLoggingMiddleware),
   preloadedState,
 });
 
