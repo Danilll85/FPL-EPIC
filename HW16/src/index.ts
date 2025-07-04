@@ -3,6 +3,8 @@ import path from "path";
 import fs from "fs";
 import { ShowFiles } from "./show";
 import { fileReader } from "./read";
+import { createFile } from "./create";
+import { deleteFile } from "./delete";
 
 dotenv.config();
 
@@ -18,6 +20,7 @@ console.log("input a command:");
 const args = process.argv.slice(2);
 const command = args[0];
 const filename = args[1];
+const fullPath = path.join(basePath, filename);
 
 switch (command) {
   case "list":
@@ -28,12 +31,21 @@ switch (command) {
       console.log("Please provide a filename");
       break;
     }
-    const fullPath = path.join(basePath, filename);
     fileReader(fullPath);
     break;
   case "create":
+    if (!filename) {
+      console.log("Please provide a filename");
+      break;
+    }
+    createFile(fullPath);
     break;
   case "delete":
+    if (!filename) {
+      console.log("Please provide a filename");
+      break;
+    }
+    deleteFile(fullPath);
     break;
   default:
     console.log("command not found");
