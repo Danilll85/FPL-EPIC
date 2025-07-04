@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import { ShowFiles } from "./show";
+import { fileReader } from "./read";
 
 dotenv.config();
 
@@ -17,14 +18,18 @@ console.log("input a command:");
 const args = process.argv.slice(2);
 const command = args[0];
 const filename = args[1];
-console.log(command);
-//console.log(filename);
 
 switch (command) {
   case "list":
     ShowFiles(basePath);
     break;
   case "read":
+    if (!filename) {
+      console.log("Please provide a filename");
+      break;
+    }
+    const fullPath = path.join(basePath, filename);
+    fileReader(fullPath);
     break;
   case "create":
     break;
