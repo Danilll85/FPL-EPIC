@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/users", verifyToken, (req: any, res: any) => {
   if (req.user?.role !== "admin") {
-    return res.status(401).json({ message: "Not valid credentials" });
+    return res.status(403).json({ message: "Access denied" });
   }
 
   return res.json(users);
