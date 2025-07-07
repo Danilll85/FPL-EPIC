@@ -3,6 +3,9 @@ import { users } from "../data/user";
 import bcrypt from "bcryptjs";
 import { User } from "../types/User";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface RegisterBody {
   email: string;
@@ -48,7 +51,7 @@ router.post("/login", async (req: Request<{}, {}, LoginBody>, res: any) => {
   const user = users.find((user) => user.email == email);
 
   if (!user) {
-    return res.status(401).json({ message: "invalid credentials" });
+    return res.status(401).json({ message: "user doesn't exists" });
   }
 
   const match = await bcrypt.compare(password, user.passwordHash);
@@ -59,7 +62,7 @@ router.post("/login", async (req: Request<{}, {}, LoginBody>, res: any) => {
 
   const token = jwt.sign({ id: user, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: TOKEN_EXP as any });
 
-  res.json({ token });
+  res.json({ token: `Bearer ${token}` });
 });
 
 export default router;
