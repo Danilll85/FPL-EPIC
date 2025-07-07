@@ -33,11 +33,13 @@ router.post("/register", async (req: Request<{}, {}, RegisterBody>, res: any) =>
 
   const hash = await bcrypt.hash(password, 10);
 
+  const isAdmin = true;
+
   const newUser = {
     id: Date.now(),
     email,
     passwordHash: hash,
-    role: "user",
+    role: isAdmin ? 'admin' : 'user',
   };
 
   users.push(newUser as User);
